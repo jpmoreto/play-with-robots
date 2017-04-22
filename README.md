@@ -15,9 +15,10 @@ O projecto está dividido nas seguintes pastas:
 
 Descrição das principais classes/funções definidas em android/src/lib:
 * jpm.lib.maps.KDTreeD : Esta classe implementa uma [KDTree](https://en.wikipedia.org/wiki/K-d_tree). Tem algumas decisões de implementação especificas do meu projecto, mas parece-me que é suficientemente genérica para poder ser usada por outros. Resumidamente, pretendo representar a ocupação num espaço 2d como um conjunto de quadrados (o tamanho de cada quadrado é passado no construtor). A arvore agrega espaços contiguos que tenham o mesmo estado de ocupação num único nó da arvore. Cada nó folha guarda o numero de vezes que foi marcado como ocupado ou como livre e a partir daí calcula uma probabilidade de ocupação. A probabilidade de ocupação é um intervalo fechado entre 0 e 1. Essa probabilidade representa 1 de 3 estados:
-  ** ocupação >= 0.5 + epsilon => espaço está ocupado com a probabilidade correspondente a ocupação.
-  ** ocupação <= 0.5 - epsilon => espaço está livre com a probabilidade correspondente a 1 - ocupação.
-  ** 0.5 - epsilon < ocupação < 0.5 + epsilon => desconheço o estado do espaço (não sei se está ocupado ou não)
+  * ocupação >= 0.5 + epsilon => espaço está ocupado com a probabilidade correspondente a ocupação.
+  * ocupação <= 0.5 - epsilon => espaço está livre com a probabilidade correspondente a 1 - ocupação.
+  * 0.5 - epsilon < ocupação < 0.5 + epsilon => desconheço o estado do espaço (não sei se está ocupado ou não)
+  
   Esta classe permite verificar os pontos ocupados (ou livres) que interceptam um segmento de recta utilizando o método intersectRay.
   Permite tambem visitar todos os nós e por exemplo construir uma lista de rectangulos com os espaços livres.
   
