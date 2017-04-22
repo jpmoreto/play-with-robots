@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="4" by="lint 2.3">
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details.">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.android.support:appcompat-v7 than 22.+ is available: 25.2.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.android.support:design than 22.+ is available: 25.2.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDynamicVersion"
+        message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.android.support:appcompat-v7:22+)">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDynamicVersion"
+        message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.android.support:design:22+)">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="InefficientWeight"
+        message="Use a `layout_width` of `0dp` instead of `wrap_content` for better performance">
+        <location
+            file="src/main/res/layout/fragment_control_landscape.xml"
+            line="25"/>
+    </issue>
+
+    <issue
+        id="InefficientWeight"
+        message="Use a `layout_width` of `0dp` instead of `wrap_content` for better performance">
+        <location
+            file="src/main/res/layout/fragment_control_landscape.xml"
+            line="48"/>
+    </issue>
+
+    <issue
+        id="InefficientWeight"
+        message="Use a `layout_width` of `0dp` instead of `wrap_content` for better performance">
+        <location
+            file="src/main/res/layout/fragment_control_portrait.xml"
+            line="31"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.activity_main` appears to be unused">
+        <location
+            file="src/main/res/layout/activity_main.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_base` appears to be unused">
+        <location
+            file="src/main/res/drawable/bg_base.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_stick` appears to be unused">
+        <location
+            file="src/main/res/drawable/bg_stick.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_stick_pressed` appears to be unused">
+        <location
+            file="src/main/res/drawable/bg_stick_pressed.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_stick_unpressed` appears to be unused">
+        <location
+            file="src/main/res/drawable/bg_stick_unpressed.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.activity_horizontal_margin` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="3"/>
+        <location
+            file="src/main/res/values-w820dp/dimens.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.activity_vertical_margin` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.fab_margin` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.appbar_padding_top` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.pie_segment_label_font_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.title_font_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.domain_label_font_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.range_label_font_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.range_tick_label_font_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.domain_tick_label_font_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.legend_text_font_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.default_margin` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.stick_size` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.fragment_chart` appears to be unused">
+        <location
+            file="src/main/res/layout/fragment_chart.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.fragment_configure` appears to be unused">
+        <location
+            file="src/main/res/layout/fragment_configure.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.fragment_control_landscape` appears to be unused">
+        <location
+            file="src/main/res/layout/fragment_control_landscape.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.fragment_control_portrait` appears to be unused">
+        <location
+            file="src/main/res/layout/fragment_control_portrait.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.fragment_logs` appears to be unused">
+        <location
+            file="src/main/res/layout/fragment_logs.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.fragment_map` appears to be unused">
+        <location
+            file="src/main/res/layout/fragment_map.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.fragment_robot` appears to be unused">
+        <location
+            file="src/main/res/layout/fragment_robot.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.menu_main` appears to be unused">
+        <location
+            file="src/main/res/menu/menu_main.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_settings` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_quit` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_stop` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_sel_charts` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_select_all` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_unselect_all` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_motor_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_select_all_motor_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_unselect_all_motor_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_motor_front_left` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_motor_front_right` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_motor_back_left` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_motor_back_right` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="17"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_accelerometer_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_select_all_accelerometer_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="20"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_unselect_all_accelerometer_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="21"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_accelerometer_x` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="22"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_accelerometer_y` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_accelerometer_z` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="24"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_gyroscope_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="26"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_select_all_gyroscope_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_unselect_all_gyroscope_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="28"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_gyroscope_x` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="29"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_gyroscope_y` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_gyroscope_z` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="31"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_compass_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="33"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_select_all_compass_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="34"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_unselect_all_compass_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="35"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_compass_x` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="36"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_compass_y` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="37"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.sel_chart_compass_z` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="38"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_us_graph` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="40"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.section_chart` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="42"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.section_logs` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="43"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.section_map` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="44"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.section_control` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="45"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.section_robot` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="46"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.section_configure` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="47"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.section_format` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="49"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.hello` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="51"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.namespace` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="52"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.angle_value` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="54"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.offset_value` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="55"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.angle_value_none` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="56"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.offset_value_none` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="57"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.sample_activity` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="24"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.simple_xy` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="44"/>
+    </issue>
+
+    <issue
+        id="GoogleAppIndexingWarning"
+        message="App is not indexable by Google Search; consider adding at least one Activity with an ACTION-VIEW intent filter. See issue explanation for more details.">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="8"/>
+    </issue>
+
+</issues>

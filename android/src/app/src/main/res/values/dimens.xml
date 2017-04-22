@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+    <dimen name="fab_margin">8dp</dimen>
+    <dimen name="appbar_padding_top">0dp</dimen>
+
+    <dimen name="pie_segment_label_font_size">10sp</dimen>
+    <dimen name="title_font_size">20sp</dimen>
+    <dimen name="domain_label_font_size">13sp</dimen>
+    <dimen name="range_label_font_size">13sp</dimen>
+    <dimen name="range_tick_label_font_size">15sp</dimen>
+    <dimen name="domain_tick_label_font_size">15sp</dimen>
+    <dimen name="legend_text_font_size">20sp</dimen>
+
+    <dimen name="default_margin">8dp</dimen>
+    <dimen name="stick_size">90dp</dimen>
+</resources>

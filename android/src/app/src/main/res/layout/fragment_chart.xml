@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="jpm.android.ui.ChartFragment">
+
+    <com.androidplot.xy.XYPlot
+        style="@style/simple_xy"
+        android:id="@+id/dynamicXYPlot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="35sp"
+        android:fitsSystemWindows="true"
+    />
+    <!--com.androidplot.xy.XYPlot
+        style="@style/APDefacto.Dark"
+        android:id="@+id/dynamicXYPlot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        androidplot.renderMode="use_background_thread"
+        ap:title="Sensors"
+        ap:domainTitle="Time"
+        ap:rangeTitle="Values"
+        ap:legendTextSize="15sp"
+        ap:legendIconHeight="15dp"
+        ap:legendIconWidth="15dp"
+        ap:legendHeight="25dp"
+        ap:legendAnchor="right_bottom"
+        android:layout_marginBottom="45sp"
+        android:fitsSystemWindows="true"
+        /-->
+    <!--com.androidplot.xy.XYPlot
+        style="@style/simple_xy"
+        android:id="@+id/dynamicXYPlot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        androidplot.renderMode="use_background_thread"
+        ap:title="Sensors"
+        ap:domainTitle="Time"
+        ap:rangeTitle="Values"
+        ap:legendTextSize="15sp"
+        ap:legendIconHeight="15dp"
+        ap:legendIconWidth="15dp"
+        ap:legendHeight="25dp"
+        ap:legendAnchor="right_bottom"
+        android:layout_marginBottom="35sp"
+        android:fitsSystemWindows="true"
+        /-->
+</LinearLayout>

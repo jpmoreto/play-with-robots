@@ -1,0 +1,207 @@
+#include <MotorsControl.h>
+#include <Arduino.h>
+#include <limits.h>
+
+// Motor -----------------------------------------------------------------------
+//
+
+MotorsControl::Motor::Motor(int pwmIoPin_, int in1IoPin_, int in2IoPin_) :
+  pwmIoPin(pwmIoPin_), in1IoPin(in1IoPin_), in2IoPin(in2IoPin_), lastPower(0), direction(0) {
+    controler.setCoMin(-maxPower);
+    controler.setCoMax(maxPower);
+}
+
+void MotorsControl::Motor::setup() {
+  pinMode(in1IoPin, OUTPUT);
+  pinMode(in2IoPin, OUTPUT);
+  pinMode(pwmIoPin, OUTPUT);
+  digitalWrite(pwmIoPin, LOW);
+  stop();
+}
+
+void MotorsControl::Motor::setPower(int pv) {
+  int newPower = controler.nextCo(pv);
+
+  if(newPower > lastPower + maxIncrementPower)
+    newPower = lastPower + maxIncrementPower;
+  else if(newPower < lastPower - maxIncrementPower)
+    newPower = lastPower + maxIncrementPower;
+
+  const boolean changeDirection = newPower * lastPower < 0;
+
+  if(changeDirection)
+    newPower = 0;
+
+  lastPower = newPower;
+
+  if(newPower > 0) {
+    if(direction <= 0) {
+      runForward();
+    }
+    analogWrite(pwmIoPin, newPower);
+  }
+  else if(newPower < 0) {
+    if(direction >= 0) {
+      runBackward();
+    }
+    analogWrite(pwmIoPin, -newPower);
+  }
+  else {
+    if(direction >= 0) {
+      stop();
+    }
+    analogWrite(pwmIoPin, 0);
+  }
+}
+
+int MotorsControl::Motor::getPower() {
+  return lastPower;
+}
+
+void MotorsControl::Motor::runBackward() {
+  digitalWrite(in1IoPin, LOW);
+  digitalWrite(in2IoPin, HIGH);
+  direction = -1;
+}
+
+void MotorsControl::Motor::runForward() {
+  digitalWrite(in1IoPin, HIGH);
+  digitalWrite(in2IoPin, LOW);
+  direction = 1;
+}
+
+void MotorsControl::Motor::stop() {
+  digitalWrite(in1IoPin, LOW);
+  digitalWrite(in2IoPin, LOW);
+  direction = 0;
+}
+
+// MotorSideControler -----------------------------------------------------------------------
+//
+MotorsControl::MotorSideControler::MotorSideControler(
+    int in1IoPin_, int in2IoPin_,
+    int backMotorPwmIoPin, int frontMotorPwmIoPin,
+    int backSensorInterruptPin, int backSensorIoPin,
+    int frontSensorInterruptPin, int frontSensorIoPin):
+
+    frontMotor(frontMotorPwmIoPin,in1IoPin_,in2IoPin_), // TODO: give separate pins for each motor
+    backMotor(backMotorPwmIoPin,in1IoPin_,in2IoPin_),
+    frontSensor(frontSensorInterruptPin,frontSensorIoPin),
+    backSensor(backSensorInterruptPin,backSensorIoPin) {}
+
+void MotorsControl::MotorSideControler::setup() {
+
+  frontMotor.setup();
+  backMotor.setup();
+
+  frontSensor.setup();
+  backSensor.setup();
+}
+
+void MotorsControl::MotorSideControler::setSpeed(int speed) {
+  frontMotor.controler.setSp(speed);
+  backMotor.controler.setSp(speed);
+}
+
+void MotorsControl::MotorSideControler::resetSensorReads() {
+  frontSensor.resetSensorReads();
+  backSensor.resetSensorReads();
+}
+
+// MotorsControl -----------------------------------------------------------------------
+//
+MotorsControl::MotorsControl(int STBYIoPin_,
+                             int rightIN1IoPin, int rightIN2IoPin,
+                             int  leftIN1IoPin, int  leftIN2IoPin,
+                             int frontRightMotorPwmIoPin, int frontLeftMotorPwmIoPin,
+                             int  backRightMotorPwmIoPin, int  backLeftMotorPwmIoPin,
+                             int frontRightSensorInterruptPin, int frontRightSensorIoPin,
+                             int frontLeftSensorInterruptPin, int frontLeftSensorIoPin,
+                             int backRightSensorInterruptPin, int backRightSensorIoPin,
+                             int backLeftSensorInterruptPin, int backLeftSensorIoPin):
+      left(leftIN1IoPin, leftIN2IoPin, backLeftMotorPwmIoPin, frontLeftMotorPwmIoPin,
+        backLeftSensorInterruptPin, backLeftSensorIoPin,
+        frontLeftSensorInterruptPin,frontLeftSensorIoPin),
+      right(rightIN1IoPin, rightIN2IoPin, backRightMotorPwmIoPin, frontRightMotorPwmIoPin,
+        backRightSensorInterruptPin, backRightSensorIoPin,
+        frontRightSensorInterruptPin,frontRightSensorIoPin),
+      STBYIoPin(STBYIoPin_),
+      isStandby(false) {}
+
+void MotorsControl::setup() {
+
+  pinMode(STBYIoPin,     OUTPUT);
+
+  setStandby(true);
+  left.setup();
+  right.setup();
+}
+
+void MotorsControl::setLoopPeriod(int period) {
+  loopPeriod = period;
+}
+
+void MotorsControl::setKp(long kp) {
+  left.frontMotor.controler.setKp(kp);
+  left.backMotor.controler.setKp(kp);
+  right.frontMotor.controler.setKp(kp);
+  right.backMotor.controler.setKp(kp);
+}
+
+void MotorsControl::setKi(long ki) {
+  left.frontMotor.controler.setKi(ki);
+  left.backMotor.controler.setKi(ki);
+  right.frontMotor.controler.setKi(ki);
+  right.backMotor.controler.setKi(ki);
+}
+
+void MotorsControl::setKd(long kd) {
+  left.frontMotor.controler.setKd(kd);
+  left.backMotor.controler.setKd(kd);
+  right.frontMotor.controler.setKd(kd);
+  right.backMotor.controler.setKd(kd);
+}
+
+void MotorsControl::setMultScale(long scale) {
+  left.frontMotor.controler.setMultScale(scale);
+  left.backMotor.controler.setMultScale(scale);
+  right.frontMotor.controler.setMultScale(scale);
+  right.backMotor.controler.setMultScale(scale);
+}
+
+void MotorsControl::setLeftSpeed(int leftSpeed) {
+  left.setSpeed(leftSpeed * loopPeriod / 1000);
+}
+
+void MotorsControl::setRightSpeed(int rightSpeed) {
+  right.setSpeed(rightSpeed * loopPeriod / 1000);
+}
+
+void MotorsControl::setStandby(const bool standby) {
+  digitalWrite(STBYIoPin, standby? LOW : HIGH);
+  isStandby = standby;
+}
+
+void MotorsControl::resetSensorReads() {
+  left.resetSensorReads();
+  right.resetSensorReads();
+}
+
+void MotorsControl::controlSpeed() {
+
+  noInterrupts();
+
+  const int deltaFrontRightSpeedSensor = right.frontSensor.getDeltaSensorRead();
+  const int deltaBackRightSpeedSensor  = right.backSensor.getDeltaSensorRead();
+  const int deltaFrontLeftSpeedSensor  = left.frontSensor.getDeltaSensorRead();
+  const int deltaBackLeftSpeedSensor   = left.backSensor.getDeltaSensorRead();
+
+  this->resetSensorReads();
+
+  interrupts();
+
+  left.frontMotor.setPower(deltaFrontLeftSpeedSensor);
+  left.backMotor.setPower(deltaBackLeftSpeedSensor);
+  right.frontMotor.setPower(deltaFrontRightSpeedSensor);
+  right.backMotor.setPower(deltaBackRightSpeedSensor);
+}

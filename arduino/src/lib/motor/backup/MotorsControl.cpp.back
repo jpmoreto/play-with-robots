@@ -1,0 +1,272 @@
+#include <MotorsControl.h>
+#include <Arduino.h>
+#include <limits.h>
+
+// Motor -----------------------------------------------------------------------
+//
+
+MotorsControl::Motor::Motor(int pwmIoPin) :
+  setSpeedPrev(0), setPowerPrev(0), pwmIoPin(pwmIoPin), power(0) {}
+
+void MotorsControl::Motor::setup() {
+  pinMode(pwmIoPin, OUTPUT);
+  digitalWrite(pwmIoPin, LOW);
+}
+
+void MotorsControl::Motor::setPower(int power) {
+  if(power > maxPower) {
+    analogWrite(pwmIoPin, maxPower);
+    this->power = maxPower;
+  } else {
+    analogWrite(pwmIoPin, maxPower);
+    this->power = maxPower;
+  }
+}
+
+int MotorsControl::Motor::getPower() {
+  return power;
+}
+
+// MotorSideControler -----------------------------------------------------------------------
+//
+MotorsControl::MotorSideControler::MotorSideControler(
+    int in1IoPin_, int in2IoPin_,
+    int backMotorPwmIoPin, int frontMotorPwmIoPin,
+    int backSensorInterruptPin, int backSensorIoPin,
+    int frontSensorInterruptPin, int frontSensorIoPin):
+
+    ticksAccumulatedError(0),
+    direction(0),
+    frontMotor(frontMotorPwmIoPin),
+    backMotor(backMotorPwmIoPin),
+    frontSensor(frontSensorInterruptPin,frontSensorIoPin),
+    backSensor(backSensorInterruptPin,backSensorIoPin),
+    speedTarget(0),
+    in1IoPin(in1IoPin_), in2IoPin(in2IoPin_) {}
+
+void MotorsControl::MotorSideControler::setup() {
+  pinMode(in1IoPin, OUTPUT);
+  pinMode(in2IoPin, OUTPUT);
+
+   frontMotor.setup();
+   backMotor.setup();
+
+   frontSensor.setup();
+   backSensor.setup();
+
+   stop();
+}
+
+void MotorsControl::MotorSideControler::runBackward() {
+  digitalWrite(in1IoPin, LOW);
+  digitalWrite(in2IoPin, HIGH);
+  direction = -1;
+}
+
+void MotorsControl::MotorSideControler::runForward() {
+  digitalWrite(in1IoPin, HIGH);
+  digitalWrite(in2IoPin, LOW);
+  direction = 1;
+}
+
+void MotorsControl::MotorSideControler::stop() {
+  digitalWrite(in1IoPin, LOW);
+  digitalWrite(in2IoPin, LOW);
+  direction = 0;
+}
+
+void MotorsControl::MotorSideControler::resetSensorReads() {
+  frontSensor.resetSensorReads();
+  backSensor.resetSensorReads();
+}
+
+long MotorsControl::MotorSideControler::expectedTiks(unsigned long deltaTMicroSec) {
+  return (speedTarget * deltaTMicroSec) / MotorsControl::sensorTicksUnit;
+}
+
+// MotorsControl -----------------------------------------------------------------------
+//
+MotorsControl::MotorsControl(int STBYIoPin_,
+                             int rightIN1IoPin, int rightIN2IoPin,
+                             int  leftIN1IoPin, int  leftIN2IoPin,
+                             int frontRightMotorPwmIoPin, int frontLeftMotorPwmIoPin,
+                             int  backRightMotorPwmIoPin, int  backLeftMotorPwmIoPin,
+                             int frontRightSensorInterruptPin, int frontRightSensorIoPin,
+                             int frontLeftSensorInterruptPin, int frontLeftSensorIoPin,
+                             int backRightSensorInterruptPin, int backRightSensorIoPin,
+                             int backLeftSensorInterruptPin, int backLeftSensorIoPin):
+      left(leftIN1IoPin, leftIN2IoPin, backLeftMotorPwmIoPin, frontLeftMotorPwmIoPin,
+        backLeftSensorInterruptPin, backLeftSensorIoPin,
+        frontLeftSensorInterruptPin,frontLeftSensorIoPin),
+      right(rightIN1IoPin, rightIN2IoPin, backRightMotorPwmIoPin, frontRightMotorPwmIoPin,
+        backRightSensorInterruptPin, backRightSensorIoPin,
+        frontRightSensorInterruptPin,frontRightSensorIoPin),
+      previousTime(0),
+      STBYIoPin(STBYIoPin_),
+      accelerationTarget(minAcceleration),
+      isStandby(false) {}
+
+void MotorsControl::setup() {
+
+  pinMode(STBYIoPin,     OUTPUT);
+
+  setStandby(true);
+  left.setup();
+  right.setup();
+}
+
+void MotorsControl::setLeftSpeed(int leftSpeed) {
+  left.speedTarget = leftSpeed;
+}
+
+void MotorsControl::setRightSpeed(int rightSpeed) {
+  right.speedTarget = rightSpeed;
+}
+
+void MotorsControl::setAcceleration(int acceleration) {
+  if(acceleration < minAcceleration)
+    this->accelerationTarget = minAcceleration;
+  else
+    this->accelerationTarget = acceleration;
+}
+
+void MotorsControl::setStandby(const bool standby) {
+  digitalWrite(STBYIoPin, standby? LOW : HIGH);
+  isStandby = standby;
+}
+
+void MotorsControl::resetSensorReads() {
+  left.resetSensorReads();
+  right.resetSensorReads();
+}
+
+/*
+condições a garantir sempre:
+- em cada passo não aumenta o power do motor mais do que é permitido
+  ou pelo aumento maximo do motor ou pela acelaração definida (o menor dos 2)
+- sempre que tem de mudar de direcção, deve desacelarar até o motor
+  ficar com velocidade 0 e só no passo seguinte é que muda a direção do motor e
+  começa novamente a acelarar.
+
+
+estado inicial:
+- parado
+
+está parado e é feito o set da velocidade para valores diferentes de 0:
+- vai acelarando até atingir a velocidade desejada.
+
+está a andar e alterada a velocidade mas sem mudar de direcção pode ser para 0:
+   - vai acelarando/desacelarando até atingir a velocidade desejada.
+
+está a andar e alterada a velocidade mudando de direcção:
+
+
+ */
+void MotorsControl::controlSpeed(const unsigned long actualTimeMicros) {
+
+  unsigned long deltaTMicroSec = getDeltaTime(actualTimeMicros);
+
+  noInterrupts();
+
+  const int deltaFrontRightSpeedSensor = right.frontSensor.getDeltaSensorRead();
+  const int deltaBackRightSpeedSensor  = right.backSensor.getDeltaSensorRead();
+  const int deltaFrontLeftSpeedSensor  = left.frontSensor.getDeltaSensorRead();
+  const int deltaBackLeftSpeedSensor   = left.backSensor.getDeltaSensorRead();
+
+  this->resetSensorReads();
+
+  interrupts();
+
+  // assuming the weels are the same size
+  //
+  const long rightExpectTiks = right.expectedTiks(deltaTMicroSec);
+  const long  leftExpectTiks = left.expectedTiks(deltaTMicroSec);
+
+  const int rightSpeedSensor = (deltaFrontRightSpeedSensor + deltaBackRightSpeedSensor)/2;
+  const int leftSpeedSensor  = ( deltaFrontLeftSpeedSensor +  deltaBackLeftSpeedSensor)/2;
+
+  right.ticksAccumulatedError += rightExpectTiks - rightSpeedSensor;
+  left.ticksAccumulatedError  +=  leftExpectTiks -  leftSpeedSensor;
+
+  const float frontRightPowerRatio =
+    getSpeedRatio(rightExpectTiks,right.ticksAccumulatedError,deltaFrontRightSpeedSensor,deltaTMicroSec);
+
+  const float frontLeftPowerRatio =
+    getSpeedRatio(leftExpectTiks,left.ticksAccumulatedError,deltaFrontLeftSpeedSensor,deltaTMicroSec);
+
+  const float backRightPowerRatio =
+    getSpeedRatio(rightExpectTiks,right.ticksAccumulatedError,deltaBackRightSpeedSensor,deltaTMicroSec);
+
+  const float backLeftPowerRatio =
+    getSpeedRatio(leftExpectTiks,left.ticksAccumulatedError,deltaBackLeftSpeedSensor,deltaTMicroSec);
+
+  const int frontLeftPower  =
+    getPower(left.frontMotor.setSpeedPrev, frontLeftPowerRatio,left.speedTarget,left.frontMotor, deltaTMicroSec);
+  const int backLeftPower   =
+    getPower(left.backMotor.setSpeedPrev, backLeftPowerRatio,left.speedTarget,left.backMotor, deltaTMicroSec);
+  const int frontRightPower =
+    getPower(right.frontMotor.setSpeedPrev, frontRightPowerRatio,right.speedTarget,right.frontMotor, deltaTMicroSec);
+  const int backRightPower  =
+    getPower(right.backMotor.setSpeedPrev, backRightPowerRatio,right.speedTarget,right.backMotor, deltaTMicroSec);
+
+  left.frontMotor.setPower(frontLeftPower);
+  left.backMotor.setPower(backLeftPower);
+  right.frontMotor.setPower(frontRightPower);
+  right.backMotor.setPower(backRightPower);
+}
+
+float MotorsControl::getSpeedRatio(long expectTiks, long accumulatedError, int speedSensor, unsigned long deltaTMicroSec) {
+  if(speedSensor == 0) {
+
+  }
+  float ratio = (float)(expectTiks + accumulatedError) / (float)speedSensor;
+
+  float maxRatio = (accelerationTarget * sensorTicksUnit) / (float)deltaTMicroSec;
+
+  if(ratio > maxRatio)
+    return maxRatio;
+
+  return ratio;
+}
+
+int MotorsControl::getPower(long& speedAct, float powerRatio, long speedTarget, Motor motor, unsigned long deltaTMicroSec) {
+
+  long speed =  (long)((speedAct * powerRatio) + 0.5);
+
+  if(speed == 0) {
+    //if(speedTarget > 0)
+  }
+  if(speed > speedTarget) {
+    return calculatePower(speedAct,speedTarget,motor.getPower());
+  }
+  else {
+    return calculatePower(speedAct,speed,motor.getPower());
+  }
+}
+
+int MotorsControl::calculatePower(long& speedAct, long speed, int actPower) {
+  if(actPower == 0) {
+    ;
+  }
+  float power = (speedAct != 0)?
+     actPower * ((float)speed / (float)speedAct):
+     actPower * speed;
+
+  speedAct = speed;
+
+  const int newPower = (int)(power + 0.5);
+
+  if (newPower * actPower < 0) {
+    return 0;
+  }
+  return newPower;
+}
+
+unsigned long MotorsControl::getDeltaTime(const unsigned long actualTime) {
+
+  const unsigned long delta = (actualTime > previousTime) ?
+       (actualTime - previousTime) : (ULONG_MAX - previousTime + actualTime);
+
+  previousTime = actualTime;
+  return delta;
+}

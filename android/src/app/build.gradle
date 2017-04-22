@@ -1,0 +1,151 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'kotlin'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+/*
+compileKotlin {
+    kotlinOptions {
+        suppressWarnings = false
+        jvmTarget = "1.8"
+    }
+}
+*/
+android {
+    compileSdkVersion 22
+    buildToolsVersion "25.0.2"
+
+    //sourceCompatibility = "1.8"
+    //targetCompatibility = "1.8"
+    /*
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+       baseline file("lint-baseline.xml")
+    }
+    */
+    defaultConfig {
+        applicationId "jpmoreto.lejos"
+        minSdkVersion 22
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+
+            minifyEnabled true
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    '/home/jm/AndroidStudioProjects/Lejos/app/proguard-rules.pro'
+        }
+        custom {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+
+            minifyEnabled true
+            shrinkResources true
+            //zipAlignEnabled true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    '/home/jm/AndroidStudioProjects/Lejos/app/proguard-rules.pro'
+        }
+    }
+    /*
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    packagingOptions {
+        // https://github.com/rosjava/android_core/issues/194
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    */
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/LICENSE'
+    }
+}
+
+dependencies {
+    //compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:appcompat-v7:22+'
+    compile 'com.android.support:design:22+'
+    //compile 'com.android.support:appcompat-v7:25.2.0'
+    //compile 'com.android.support:design:25.2.0'
+    compile 'com.androidplot:androidplot-core:1.4.1'
+    compile 'com.jmedeisis:bugstick:0.2.2'
+    //compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "it.unimi.dsi:fastutil:7.1.0"
+    //compile project(':lib')
+
+    /*
+    compile ("com.tinkerpop.blueprints:blueprints-core:2.6.0") {
+        exclude group: "commons-logging"
+    }
+    compile "jung:jung:1.7.6"
+    compile "com.google.guava:guava:20.0"
+    compile ("es.usc.citius.hipster:hipster-all:1.1.0-SNAPSHOT") {
+        exclude group: "org.json"
+        exclude group: "commons-logging"
+    }
+    compile ('org.ros.rosjava_core:rosjava:[0.3,0.4)') {
+        exclude group: 'xml-apis'
+        exclude group: 'junit'
+    }
+    compile 'org.ros.rosjava_messages:geometry_msgs:[1.12,1.13)'
+    compile 'org.ros.rosjava_messages:std_msgs:0.5.10'
+    compile 'org.ros.rosjava_messages:rosgraph_msgs:1.11.2'
+    compile 'org.ros.rosjava_messages:sensor_msgs:[1.12,1.13)'
+
+    compile ('com.github.rosjava.android_remocons:common_tools:[0.2,0.3)') {
+        exclude group: 'xml-apis'
+        exclude group: 'junit'
+    }
+
+    compile ('org.ros.android_core:android_15:[0.3,0.4)') {
+        exclude group: 'xml-apis'
+        exclude group: 'junit'
+    }
+
+    compile ('org.ros.rosjava_core:rosjava_geometry:[0.3,0.4)') {
+        exclude group: 'xml-apis'
+        exclude group: 'junit'
+    }
+    compile ('org.ros.rosjava_messages:map_store:[0.3,0.4)') {
+        exclude group: 'xml-apis'
+        exclude group: 'junit'
+    }
+    compile ('org.ros.rosjava_messages:move_base_msgs:[1.12,1.13)') {
+        exclude group: 'xml-apis'
+        exclude group: 'junit'
+    }
+    compile ('org.ros.rosjava_messages:world_canvas_msgs:[0.1,0.2)') {
+        exclude group: 'xml-apis'
+        exclude group: 'junit'
+    }
+    */
+}
+/*
+repositories {
+    //maven {
+    //    url "https://github.com/rosjava/rosjava_mvn_repo/raw/master"
+    //}
+    mavenCentral()
+}
+*/

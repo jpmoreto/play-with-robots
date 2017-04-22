@@ -1,0 +1,57 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="jpm.android.ui.ControlFragment">
+
+    <jpm.android.ui.BugView
+        android:id="@+id/bugview"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_margin="@dimen/default_margin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView style="@style/TextAppearance.AppCompat.Caption"
+           android:id="@+id/tv_angle"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="start"
+           android:layout_margin="@dimen/default_margin"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/tv_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/default_margin" />
+    </LinearLayout>
+    <com.jmedeisis.bugstick.Joystick
+            android:id="@+id/joystick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_base">
+
+            <Button
+                android:layout_width="@dimen/stick_size"
+                android:layout_height="@dimen/stick_size"
+                android:background="@drawable/bg_stick" />
+
+    </com.jmedeisis.bugstick.Joystick>
+
+</LinearLayout>

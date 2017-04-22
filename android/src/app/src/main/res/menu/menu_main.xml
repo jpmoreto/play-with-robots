@@ -1,0 +1,142 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="jpm.android.ui.MainActivity">
+    <group app:showAsAction="never">
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_settings" />
+        <item
+            android:id="@+id/action_stop"
+            android:title="@string/action_stop" />
+        <item
+            android:id="@+id/group"
+            android:title="@string/action_sel_charts">
+            <menu>
+                <item
+                    android:id="@+id/action_select_all"
+                    android:title="@string/action_select_all" />
+                <item
+                    android:id="@+id/action_unselect_all"
+                    android:title="@string/action_unselect_all" />
+                <item
+                    android:id="@+id/action_motor_graph"
+                    android:title="@string/action_motor_graph">
+                    <menu>
+                        <item
+                            android:id="@+id/action_select_all_motor_graph"
+                            android:title="@string/action_select_all_motor_graph" />
+                        <item
+                            android:id="@+id/action_unselect_all_motor_graph"
+                            android:title="@string/action_unselect_all_motor_graph" />
+                        <item
+                            android:id="@+id/sel_chart_motor_front_left"
+                            android:title="@string/sel_chart_motor_front_left"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_motor_front_right"
+                            android:title="@string/sel_chart_motor_front_right"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_motor_back_left"
+                            android:title="@string/sel_chart_motor_back_left"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_motor_back_right"
+                            android:title="@string/sel_chart_motor_back_right"
+                            android:checkable="true"
+                            android:checked="true" />
+                    </menu>
+                </item>
+                <item
+                    android:id="@+id/action_accelerometer_graph"
+                    android:title="@string/action_accelerometer_graph">
+                    <menu>
+                        <item
+                            android:id="@+id/action_select_all_accelerometer_graph"
+                            android:title="@string/action_select_all_accelerometer_graph" />
+                        <item
+                            android:id="@+id/action_unselect_all_accelerometer_graph"
+                            android:title="@string/action_unselect_all_accelerometer_graph" />
+                        <item
+                            android:id="@+id/sel_chart_accelerometer_x"
+                            android:title="@string/sel_chart_accelerometer_x"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_accelerometer_y"
+                            android:title="@string/sel_chart_accelerometer_y"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_accelerometer_z"
+                            android:title="@string/sel_chart_accelerometer_z"
+                            android:checkable="true"
+                            android:checked="true" />
+                    </menu>
+                </item>
+                <item
+                    android:id="@+id/action_gyroscope_graph"
+                    android:title="@string/action_gyroscope_graph"
+                    app:showAsAction="never">
+                    <menu>
+                        <item
+                            android:id="@+id/action_select_all_gyroscope_graph"
+                            android:title="@string/action_select_all_gyroscope_graph" />
+                        <item
+                            android:id="@+id/action_unselect_all_gyroscope_graph"
+                            android:title="@string/action_unselect_all_gyroscope_graph" />
+                        <item
+                            android:id="@+id/sel_chart_gyroscope_x"
+                            android:title="@string/sel_chart_gyroscope_x"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_gyroscope_y"
+                            android:title="@string/sel_chart_gyroscope_y"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_gyroscope_z"
+                            android:title="@string/sel_chart_gyroscope_z"
+                            android:checkable="true"
+                            android:checked="true" />
+                    </menu>
+                </item>
+                <item
+                    android:id="@+id/action_compass_graph"
+                    android:title="@string/action_compass_graph">
+                    <menu>
+                        <item
+                            android:id="@+id/action_select_all_compass_graph"
+                            android:title="@string/action_select_all_compass_graph" />
+                        <item
+                            android:id="@+id/action_unselect_all_compass_graph"
+                            android:title="@string/action_unselect_all_compass_graph" />
+                        <item
+                            android:id="@+id/sel_chart_compass_x"
+                            android:title="@string/sel_chart_compass_x"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_compass_y"
+                            android:title="@string/sel_chart_compass_y"
+                            android:checkable="true"
+                            android:checked="true" />
+                        <item
+                            android:id="@+id/sel_chart_compass_z"
+                            android:title="@string/sel_chart_compass_z"
+                            android:checkable="true"
+                            android:checked="true" />
+                    </menu>
+                </item>
+            </menu>
+        </item>
+        <item
+            android:id="@+id/action_quit"
+            android:title="@string/action_quit" />
+    </group>
+</menu>
