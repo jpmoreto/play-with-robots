@@ -4,6 +4,9 @@ Support software to build my robot toy using android (kotlin) and arduino (c++)
 For the no portuguese speakers sory, but to be fluent in my writing all the other things will be writed in portuguese (except the code itself)
 
 O objectivo do projecto está descrito [aqui](https://github.com/jpmoreto/play-with-robots/blob/master/docs/descri%C3%A7%C3%A3o_robot.pdf)
+E algumas fotografias do robot (à uns meses atrás):
+* [fotografia 1](https://github.com/jpmoreto/play-with-robots/blob/master/docs/20170208_013006.jpg)
+* [fotografia 2](https://github.com/jpmoreto/play-with-robots/blob/master/docs/20170208_013019.jpg)
 
 Este projecto está em obras e ainda falta muito trabalho quer de software quer com o ferro de soldar. Mas já existe algum código na pasta andoroid/src/lib que já está pronto a utilizar. 
 
@@ -14,7 +17,7 @@ O projecto está dividido nas seguintes pastas:
 * arduino : Código que corre no Arduino.
 
 Descrição das principais classes/funções definidas em android/src/lib:
-* jpm.lib.maps.KDTreeD : Esta classe implementa uma [KDTree](https://en.wikipedia.org/wiki/K-d_tree). Tem algumas decisões de implementação especificas do meu projecto, mas parece-me que é suficientemente genérica para poder ser usada por outros. Resumidamente, pretendo representar a ocupação num espaço 2d como um conjunto de quadrados (o tamanho de cada quadrado é passado no construtor). A arvore agrega espaços contiguos que tenham o mesmo estado de ocupação num único nó da arvore. Cada nó folha guarda o numero de vezes que foi marcado como ocupado ou como livre e a partir daí calcula uma probabilidade de ocupação. A probabilidade de ocupação é um intervalo fechado entre 0 e 1. Essa probabilidade representa 1 de 3 estados:
+* jpm.lib.maps.KDTreeD : Esta classe implementa uma [KDTree](https://en.wikipedia.org/wiki/K-d_tree). Tem algumas decisões de implementação especificas do meu projecto, mas parece-me que é suficientemente genérica para poder ser usada por outros. Resumidamente, pretendo representar a ocupação num espaço 2d como um conjunto de quadrados (o tamanho de cada quadrado é passado no construtor). A arvore agrega espaços contiguos que tenham o mesmo estado de ocupação num único nó. Cada nó folha guarda o numero de vezes que foi marcado como ocupado ou como livre e a partir daí calcula uma probabilidade de ocupação. A probabilidade de ocupação é um intervalo fechado entre 0 e 1. Essa probabilidade representa 1 de 3 estados:
   * ocupação >= 0.5 + epsilon => espaço está ocupado com a probabilidade correspondente a ocupação.
   * ocupação <= 0.5 - epsilon => espaço está livre com a probabilidade correspondente a 1 - ocupação.
   * 0.5 - epsilon < ocupação < 0.5 + epsilon => desconheço o estado do espaço (não sei se está ocupado ou não)
