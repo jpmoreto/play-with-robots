@@ -22,10 +22,10 @@ Descrição das principais classes/funções definidas em android/src/lib:
   Esta classe permite verificar os pontos ocupados (ou livres) que interceptam um segmento de recta utilizando o método intersectRay.
   Permite tambem visitar todos os nós e por exemplo construir uma lista de rectangulos com os espaços livres.
   
-* jpm.lib.math.compactRectangles: Esta função leva como argumento uma lista de rectangulos, e devolve como resultado uma lista de rectangulos em que agregou rectangulos adjacentes num único rectangulo. Se os rectangulos representarem por exemplo espaço livre (ou ocupado) a lista devolvida representa exatamente o mesmo estado mas usando o menor numero de rectangulos que consiga.  
+* jpm.lib.math.compactRectangles: Esta função leva como argumento uma lista de rectangulos, e devolve como resultado uma lista de rectangulos em que agregou rectangulos adjacentes num único rectangulo. Se os rectangulos representarem por exemplo espaço livre (ou ocupado) a lista devolvida representa exatamente o mesmo espaço mas usando o menor numero de rectangulos que consiga.  
 * jpm.lib.graph.graphbuilder.GraphBuilder.build: Esta função leva como argumento uma lista de rectangulos e devolve um grafo, criando um nó por cada rectangulo adjacente a outro, e ligações entre os vários nós sempre que é possivel ir de um para outro sem sair do rectangulo (TODO: explicar isto melhor).  
 * jpm.lib.graph.algorithms.AStarAlgorithm: Esta classe implementa o algoritmo [a* search algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm), que permite calcular o caminho mais curto entre 2 nós de um grafo.
-* jpm.lib.graph.graphbuilder.GraphBuilder.optimizePath : Esta função leva como argumentos um caminho devolvido pelo AStarAlgorithm, e uma KDTreeD que representa a ocupação do espaço e devolve um caminho com menos nós, eliminando nós intermédios sempre que pode navegar directamente para um nó mais longe sem encontrar espaços ocupados (para verificar isso usa o método intersectRay da classe KDTreeD).
+* jpm.lib.graph.graphbuilder.GraphBuilder.optimizePath : Esta função leva como argumentos um caminho devolvido pelo AStarAlgorithm, e uma KDTreeD que representa a ocupação do espaço e devolve um caminho com menos nós, eliminando nós intermédios sempre que pode navegar directamente para um nó mais distante sem encontrar espaços ocupados (para verificar isso usa o método intersectRay da classe KDTreeD).
 
  
  
