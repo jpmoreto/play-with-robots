@@ -47,8 +47,10 @@ Os testes realizados num portatil Quad Core i5 2.50GHz (usando somente uma threa
 * tamanho do caminho depois de optimizado = passa por +- 30 nós
 
 +- 63% do tempo (100 ms) corresponde ao algoritmo de compactação dos rectangulos.
-Estes tempos podem ser reproduzidos utilizando a classe de testes **KDTreeDBuildGraphPath**
+Estes tempos podem ser reproduzidos utilizando a classe de testes **KDTreeDBuildGraphPath**.
 
+Ainda não testei em android correr um teste equivalente, mas o tempo de execução (que será bastante maior) poderá afectar as estratégias de navegação a utilizar.
+Pode haver métodos baseado em heurísticas mais simples de navegação suportadas por informação local, circunscrita à envolvente próxima do robot num determinado momento, não havendo necessidade de em tempo real estar permanentemente a executar este algoritmo.
 
 A classe **KDTreeD** implementa tambem um algoritmo que dado um segmento de recta e a representação de um espaço ocupado calcula o ponto de intersecção desse segmento de recta com o espaço ocupado mais proximo de um dos pontos do segmento. 
 A classe **KDTreeDRayTracing** existente debaixo da pasta **android/testsApp** tem um exemplo completo de como isso é feito e depois mostra visualmente usando javafx quer a representação do espaço ocupado, todos os pontos de intersecção do segmento de recta com esse espaço, e o ponto de intersecção mais proximo de um dos pontos do segmento de recta.
