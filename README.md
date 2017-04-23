@@ -37,4 +37,6 @@ Descrição das principais classes/funções definidas em android/src/lib:
 
 Neste momento o código existente em **lib** permite ir construindo a representação da ocupação de um espaço 2d usando a classe **KDTreeD**, derivar uma nova representação desse espaço ocupado "engordando-o" com a largura do robot, de maneira a poder considerá-lo como um ponto nos calculos restantes, e a partir daí construir um grafo que representa os caminhos possíveis entre quaisquer 2 pontos e calcular o caminho mais curto entre eles usando a classe **AStarAlgorithm**.
 A classe **KDTreeDBuildGraphPath** existente debaixo da pasta **android/testsApp** tem um exemplo completo de como isso é feito e depois mostra visualmente usando javafx quer a representação do espaço ocupado quer a representação do caminho mais curto entre 2 pontos.
- 
+
+A classe **KDTreeD** implementa tambem um algoritmo que dado um segmento de recta e a representação de um espaço ocupado calcula o ponto de intersecção desse segmento de recta com o espaço ocupado mais proximo de um dos pontos do segmento. 
+A classe **KDTreeDRayTracing** existente debaixo da pasta **android/testsApp** tem um exemplo completo de como isso é feito e depois mostra visualmente usando javafx quer a representação do espaço ocupado, os pontos de intersecção do segmento de recta e o ponto de intersecção mais proximo de um dos pontos do segmento de recta.
