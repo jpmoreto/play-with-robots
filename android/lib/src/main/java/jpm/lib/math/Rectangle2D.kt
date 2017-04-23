@@ -20,7 +20,7 @@ open class DoubleRectangle2D(val p1: DoubleVector2D, val p2: DoubleVector2D) {
     fun height() = p2.y - p1.y
     fun width()  = p2.x - p1.x
 }
-
+/*
 object CompareDoubleRectangle2DXY : Comparator<DoubleRectangle2D> {
     override fun compare(r0: DoubleRectangle2D, r1: DoubleRectangle2D): Int {
 
@@ -54,6 +54,7 @@ object CompareDoubleRectangle2DYX : Comparator<DoubleRectangle2D> {
         return 0
     }
 }
+*/
 
 object SimpleCompareDoubleRectangle2DXY : Comparator<DoubleRectangle2D> {
     override fun compare(r0: DoubleRectangle2D, r1: DoubleRectangle2D): Int {
@@ -120,7 +121,7 @@ class RectangleContext(p1: DoubleVector2D, p2: DoubleVector2D): DoubleRectangle2
             = super.toString()
 }
 
-fun compactRectangles(rectContexts: ObjectAVLTreeSet<RectangleContext>, minDiff: Int = 30, maxIterations: Int= 5): Collection<RectangleContext> {
+fun compactRectangles(rectContexts: Collection<RectangleContext>, minDiff: Int = 30, maxIterations: Int= 5): Collection<RectangleContext> {
     var size = 0
 
     val rectContextsByBottom = Double2ReferenceAVLTreeMap<ObjectAVLTreeSet<RectangleContext>>()
@@ -213,7 +214,7 @@ fun compactRectangles(rectContexts: ObjectAVLTreeSet<RectangleContext>, minDiff:
                     if (!nearZero(leftPrevious.p2.y - left.p1.y, epsilon)) break
                     leftMatchRectangles.add(left)
                 }
-                while (right.p2.y < left.p2.y  - epsilon && iterRight.hasNext()) {
+                while (right.p2.y < left.p2.y - epsilon && iterRight.hasNext()) {
                     val rightPrevious = right
                     right = iterRight.next()
                     if (!nearZero(rightPrevious.p2.y - right.p1.y, epsilon)) break

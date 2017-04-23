@@ -17,10 +17,10 @@ object GraphBuilder {
 
         val graph = WeightedSpaceGraph.Graph()
 
-        val startNode = WeightedSpaceGraph.Node(startPoint,startPoint)
+        val startNode = WeightedSpaceGraph.Node(startPoint,startPoint,startPoint)
         graph.add(startNode)
         graph.startAdd(startNode)
-        val endNode = WeightedSpaceGraph.Node(endPoint,endPoint)
+        val endNode = WeightedSpaceGraph.Node(endPoint,endPoint,endPoint)
         graph.add(endNode)
         graph.endAdd(endNode)
 
@@ -33,8 +33,8 @@ object GraphBuilder {
 
             var node = graph.nodes[middlePoint]
 
-            if(node == null) {
-                node =  WeightedSpaceGraph.Node(DoubleVector2D(xMin,y),DoubleVector2D(xMax,y))
+            if(node === null) {
+                node =  WeightedSpaceGraph.Node(DoubleVector2D(xMin,y),DoubleVector2D(xMax,y),middlePoint)
                 graph.add(node)
             }
             nodesToAdd.add(node)
@@ -47,37 +47,45 @@ object GraphBuilder {
 
             val middlePoint = DoubleVector2D(x, (yMin + yMax) / 2.0)
 
-            var node = graph.nodes[middlePoint]
+            var node1 = graph.nodes[middlePoint]
 
-            if(node == null) {
-                node =  WeightedSpaceGraph.Node(DoubleVector2D(x,yMin),DoubleVector2D(x,yMax))
-                graph.add(node!!)
+            if(node1 === null) {
+                node1 =  WeightedSpaceGraph.Node(DoubleVector2D(x,yMin),DoubleVector2D(x,yMax),middlePoint)
+                graph.add(node1)
             }
-            nodesToAdd.add(node!!)
+            nodesToAdd.add(node1)
         }
 
-        for(r in rectangles) {
-            val rContainsStart = r.contains(startPoint)
-            val rContainsEnd = r.contains(endPoint)
+        var startFound = false
+        var endFound = false
+        val nodesToAdd = ObjectAVLTreeSet<WeightedSpaceGraph.Node>(WeightedSpaceGraph.NodeComparator)
 
-            val nodesToAdd = ObjectAVLTreeSet<WeightedSpaceGraph.Node>(WeightedSpaceGraph.NodeComparator)
+        for(r in rectangles) {
 
             for (bottom in r[Side.BOTTOM]) addHorizontal(nodesToAdd,r,bottom,bottom.p2.y)
             for (top in r[Side.TOP])       addHorizontal(nodesToAdd,r,top,top.p1.y)
             for (left in r[Side.LEFT])     addVertical(nodesToAdd,r,left,left.p2.x)
             for (right in r[Side.RIGHT])   addVertical(nodesToAdd,r,right,right.p1.x)
 
-            for(nodeA in nodesToAdd) {
+            for(nodeA in nodesToAdd)
                 for(nodeB in nodesToAdd)
-                    if(nodeA != nodeB)
+                    if(nodeA !== nodeB)
                         WeightedSpaceGraph.Arc(nodeA,nodeB,(nodeA.middlePoint - nodeB.middlePoint).length())
 
-                if(rContainsStart)
+            if(!startFound && r.contains(startPoint)) {
+                for(nodeA in nodesToAdd)
                     WeightedSpaceGraph.Arc(startNode,nodeA,(startNode.middlePoint - nodeA.middlePoint).length())
 
-                if(rContainsEnd)
-                    WeightedSpaceGraph.Arc(nodeA,endNode,(endNode.middlePoint - nodeA.middlePoint).length())
+                startFound = true
             }
+
+            if(!endFound && r.contains(endPoint)) {
+                for(nodeA in nodesToAdd)
+                    WeightedSpaceGraph.Arc(nodeA,endNode,(endNode.middlePoint - nodeA.middlePoint).length())
+
+                endFound = true
+            }
+            nodesToAdd.clear()
         }
 
         return graph
@@ -90,8 +98,8 @@ object GraphBuilder {
         val startNode = graph.startNode
 
 
-        if(node != null && startNode != null) {
-            while (node != null) {
+        if(node !== null && startNode !== null) {
+            while (node !== null) {
                 path.add(node)
                 node = node.from()
             }
@@ -125,20 +133,18 @@ object GraphBuilder {
             var lastNode: WeightedSpaceGraph.Node? = null
 
             for (node in originalPath) {
-                if (firstNode == null) {
+                if (firstNode === null) {
                     firstNode = node
                     path.add(firstNode)
                 } else {
-                    if (lastNode != null) {
-                        if (!havePathFromTo(firstNode, node)) {
-                            path.add(lastNode)
-                            firstNode = lastNode
-                        }
+                    if (lastNode !== null && !havePathFromTo(firstNode, node)) {
+                        path.add(lastNode)
+                        firstNode = lastNode
                     }
                     lastNode = node
                 }
             }
-            if (firstNode != originalPath.last()) {
+            if (firstNode !== originalPath.last()) {
                 path.add(lastNode!!)
             }
 

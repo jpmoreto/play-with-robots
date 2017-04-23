@@ -7,7 +7,6 @@ import jpm.lib.maps.KDTreeAbs.SplitAxis
 import jpm.lib.maps.KDTreeAbs.TOP_OR_RIGHT
 import jpm.lib.maps.KDTreeAbs.BOTTOM_OR_LEFT
 import jpm.lib.maps.KDTreeAbs.otherChild
-import jpm.lib.math.CompareDoubleRectangle2DXY
 import jpm.lib.math.RectangleContext
 import jpm.lib.math.lineIntersection
 import java.util.Comparator
@@ -39,8 +38,8 @@ object KDTreeD {
         }
     }
 
-    fun fromNodeToRectangle(nodes: ObjectAVLTreeSet<Node>): ObjectAVLTreeSet<RectangleContext> {
-        val rectangles = ObjectAVLTreeSet<RectangleContext>(CompareDoubleRectangle2DXY)
+    fun fromNodeToRectangle(nodes: ObjectAVLTreeSet<Node>): Collection<RectangleContext> {
+        val rectangles = mutableListOf<RectangleContext>()
 
         for(node in nodes) {
             val x = node.center.x
@@ -118,8 +117,8 @@ object KDTreeD {
             }
         }
 
-        fun getNodes(minOccup: Double, maxOccup: Double, x1: Double, y1: Double, x2: Double, y2: Double): ObjectAVLTreeSet<KDTreeD.Node> {
-            val result = ObjectAVLTreeSet<KDTreeD.Node>(KDTreeD.CompareNodesX)
+        fun getNodes(minOccup: Double, maxOccup: Double, x1: Double, y1: Double, x2: Double, y2: Double): Collection<KDTreeD.Node> {
+            val result = mutableListOf<KDTreeD.Node>()
 
             visitAll(x1,y1,x2,y2) { t ->
                 if(t.isLeaf) {
@@ -129,6 +128,27 @@ object KDTreeD {
                 }
             }
             return result
+        }
+
+        fun getRectangles(minOccup: Double, maxOccup: Double, x1: Double, y1: Double, x2: Double, y2: Double): Collection<RectangleContext> {
+            val rectangles = mutableListOf<RectangleContext>()
+
+            visitAll(x1,y1,x2,y2) { t ->
+                if(t.isLeaf) {
+                    val occup = t.occupied()
+                    if(minOccup <= occup && occup <= maxOccup) {
+                        val x = t.center.x
+                        val y = t.center.y
+                        val halfXDim = t.xDim / 2.0
+                        val halfYDim = t.yDim / 2.0
+
+                        rectangles.add(RectangleContext(
+                            DoubleVector2D(x - halfXDim, y - halfYDim),
+                            DoubleVector2D(x + halfXDim, y + halfYDim)))
+                    }
+                }
+            }
+            return rectangles
         }
 
         override fun intersectRay(p: DoubleVector2D, v: DoubleVector2D, tmax: Double,

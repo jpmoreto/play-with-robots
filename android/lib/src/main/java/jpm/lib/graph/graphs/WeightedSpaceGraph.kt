@@ -1,6 +1,6 @@
 package jpm.lib.graph.graphs
 
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet
 import jpm.lib.math.DoubleVector2D
 import java.util.*
 
@@ -11,7 +11,7 @@ import java.util.*
 
 object WeightedSpaceGraph {
 
-    class Node(val p1: DoubleVector2D, val p2: DoubleVector2D): WeightedGraphAbs.Node<Node,Arc> {
+    class Node(val p1: DoubleVector2D, val p2: DoubleVector2D, val middlePoint: DoubleVector2D): WeightedGraphAbs.Node<Node,Arc> {
 
         override fun setVisited(isVisited: Boolean) {
             //println("setVisited $this ${getMinCostToEndNode() + minCost_}")
@@ -32,9 +32,7 @@ object WeightedSpaceGraph {
 
         override fun getMinCostToEndNode(): Double = minCostToEndNode_
 
-        val middlePoint = DoubleVector2D((p1.x + p2.x) / 2.0, (p1.y + p2.y) / 2.0)
-
-        val arcs = ObjectAVLTreeSet<Arc>(ArcComparator)
+        val arcs = ObjectOpenHashSet<Arc>(53)
         var visited_ = false
         var minCost_: Double = Double.POSITIVE_INFINITY
         var minCostArc_: Arc? = null
@@ -72,16 +70,28 @@ object WeightedSpaceGraph {
             //endNode.add(this)
         }
 
+        override fun equals(other: Any?): Boolean {
+            if(other is Arc) {
+                return startNode === other.startNode && endNode == other.endNode
+            }
+            return false
+        }
+
+        override fun hashCode(): Int {
+            return startNode.hashCode().xor(endNode.hashCode())
+        }
+
         override fun toString(): String {
             return "Arc(startNode=$startNode, endNode=$endNode, weight=$weight)"
         }
     }
-
+    /*
     object ArcComparator: Comparator<Arc> {
         override fun compare(a0: Arc, a1: Arc): Int {
             return NodeComparator.compare(a0.endNode,a1.endNode)
         }
     }
+    */
 
     object NodeComparator: Comparator<Node> {
         override fun compare(a0: Node, a1: Node): Int

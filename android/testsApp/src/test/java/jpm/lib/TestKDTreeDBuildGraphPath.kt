@@ -77,7 +77,7 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
     }
 
     override fun drawShapesKDTreeD(gc: GraphicsContext) {
-       for(i in 1..19)  {
+       for(i in 1..39)  {
            gc.clearRect(0.0, 0.0, gc.canvas.width, gc.canvas.height)
            drawShapesKDTreeD1(gc)
        }
@@ -106,11 +106,12 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
 
         val t1_1 = System.currentTimeMillis()
 
-        val nodes = treeWithRobotWith.getNodes(minOccup,maxOccup,deltaX.toDouble(),deltaY.toDouble(),deltaX.toDouble() + rndX,deltaY.toDouble() + rndY)
+        //val nodes = treeWithRobotWith.getNodes(minOccup,maxOccup,deltaX.toDouble(),deltaY.toDouble(),deltaX.toDouble() + rndX,deltaY.toDouble() + rndY)
 
         val t2 = System.currentTimeMillis()
 
-        val rectangles = KDTreeD.fromNodeToRectangle(nodes)
+        //val rectangles = KDTreeD.fromNodeToRectangle(nodes)
+        val rectangles = treeWithRobotWith.getRectangles(minOccup,maxOccup,deltaX.toDouble(),deltaY.toDouble(),deltaX.toDouble() + rndX,deltaY.toDouble() + rndY)
 
         val t3 = System.currentTimeMillis()
 

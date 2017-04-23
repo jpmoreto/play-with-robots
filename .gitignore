@@ -17,3 +17,6 @@ bin/
 **/gen/
 **/out/
 .externalNativeBuild
+#temp rules
+**/fuzzy/
+
