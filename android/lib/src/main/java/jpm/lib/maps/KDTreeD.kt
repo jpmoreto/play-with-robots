@@ -82,14 +82,10 @@ object KDTreeD {
             visitAll { t ->
                 if (t.isLeaf && t.occupied() > occupiedThreshold) {
 
-                    val dimX = t.xDim / 2.0
-                    val dimY = t.yDim / 2.0
+                    val dimX = t.xDim / 2.0 + enlargeFactor
+                    val dimY = t.yDim / 2.0 + enlargeFactor
 
-                    enlargedTree.setOccupied(
-                            t.center.x - dimX - enlargeFactor,
-                            t.center.y - dimY - enlargeFactor,
-                            t.center.x + dimX + enlargeFactor,
-                            t.center.y + dimY + enlargeFactor)
+                    enlargedTree.setOccupied(t.center.x - dimX,t.center.y - dimY,t.center.x + dimX,t.center.y + dimY)
                 }
             }
             return enlargedTree
@@ -167,60 +163,60 @@ object KDTreeD {
             }
         }
 
+        fun intersectionPoint(p: DoubleVector2D, trayEnd: DoubleVector2D): DoubleVector2D? {
+            val halfXDim = xDim / 2.0
+            val halfYDim = yDim / 2.0
+
+            val leftBottom  = DoubleVector2D(center.x - halfXDim, center.y - halfYDim)
+            val leftTop     = DoubleVector2D(center.x - halfXDim, center.y + halfYDim)
+            val rightBottom = DoubleVector2D(center.x + halfXDim, center.y - halfYDim)
+            val rightTop    = DoubleVector2D(center.x + halfXDim, center.y + halfYDim)
+
+            val intersectionPointLeft   = lineIntersection(leftBottom,leftTop,p,trayEnd)
+            val intersectionPointRight  = lineIntersection(rightBottom,rightTop,p,trayEnd)
+            val intersectionPointBottom = lineIntersection(leftBottom,rightBottom,p,trayEnd)
+            val intersectionPointTop    = lineIntersection(leftTop,rightTop,p,trayEnd)
+
+            val possibleIntersectionPoints = arrayOf(intersectionPointLeft,intersectionPointRight,intersectionPointBottom,intersectionPointTop)
+
+            // we can have 1 or 2 intersection points
+            val intersectionPoints = possibleIntersectionPoints.filter { it != null }.toTypedArray()
+
+            if(intersectionPoints.isNotEmpty()) { // only to be safe, is possible if the ray is small enough
+                if (intersectionPoints.size == 1) {
+                    if (intersectionPoints[0]?.first == intersectionPoints[0]?.second) {
+                        return intersectionPoints[0]?.first
+                    }
+                    return DoubleVector2D(
+                        (intersectionPoints[0]!!.first.x + intersectionPoints[0]!!.second.x) / 2.0,
+                        (intersectionPoints[0]!!.first.y + intersectionPoints[0]!!.second.y) / 2.0)
+                }
+                return DoubleVector2D(
+                    (intersectionPoints[0]!!.first.x + intersectionPoints[1]!!.first.x) / 2.0,
+                    (intersectionPoints[0]!!.first.y + intersectionPoints[1]!!.first.y) / 2.0)
+            }
+            return null
+        }
+
         fun intersectRayMinPoint(pd: DoubleVector2D, v: DoubleVector2D, tmax: Double, occupiedThreshold: Double): DoubleVector2D? {
-            var nearPointFromPd = pd + v * tmax
+            val trayEnd = pd + v * tmax
+            var nearPointFromPd:DoubleVector2D? = null
+            var nearDistance = (trayEnd - pd).length() + 100.0
 
             fun visit(tree: KDTreeD.Node, p: DoubleVector2D, v: DoubleVector2D, t: Double): Boolean {
 
+                if((pd - p).length() > nearDistance) return false
+
                 if (tree.isLeaf && tree.occupied() > occupiedThreshold) {
 
-                    val trayEnd = p + v * t
+                    val intersectionPoint = tree.intersectionPoint(p,trayEnd)
 
-                    val intersectionPointLeft = lineIntersection(
-                        DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                        DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                        p,
-                        trayEnd)
-
-                    val intersectionPointRight = lineIntersection(
-                        DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                        DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                        p,
-                        trayEnd)
-
-                    val intersectionPointBottom = lineIntersection(
-                        DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                        DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                        p,
-                        trayEnd)
-
-                    val intersectionPointTop = lineIntersection(
-                        DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                        DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                        p,
-                        trayEnd)
-
-                    val possibleIntersectionPoints = arrayOf(intersectionPointLeft,intersectionPointRight,intersectionPointBottom,intersectionPointTop)
-
-                    val intersectionPoints = possibleIntersectionPoints.filter { it != null }.toTypedArray()
-
-                    val intersectionPoint =
-                        if(intersectionPoints.size == 1) {
-                            if(intersectionPoints[0]?.first == intersectionPoints[0]?.second)  {
-                                intersectionPoints[0]?.first
-                            } else {
-                                DoubleVector2D(
-                                    (intersectionPoints[0]!!.first.x  + intersectionPoints[0]!!.second.x) / 2.0,
-                                    (intersectionPoints[0]!!.first.y  + intersectionPoints[0]!!.second.y) / 2.0)
-                            }
-                        } else {
-                            DoubleVector2D(
-                                (intersectionPoints[0]!!.first.x  + intersectionPoints[1]!!.first.x) / 2.0,
-                                (intersectionPoints[0]!!.first.y  + intersectionPoints[1]!!.first.y) / 2.0)
+                    if(intersectionPoint != null) { // only to be safe, is possible if the ray is small enough
+                        val distance = (pd - intersectionPoint).length()
+                        if (distance < nearDistance) {
+                            nearDistance = distance
+                            nearPointFromPd = intersectionPoint
                         }
-
-                    if((pd - intersectionPoint!!).length() < (pd - nearPointFromPd).length()) {
-                        nearPointFromPd = intersectionPoint
                     }
                 }
                 return true
@@ -255,6 +251,8 @@ object KDTreeD {
 
             if(validNode(node!!)) {
 
+                val halfDimMin = dimMin / 2.0
+
                 while(node != null) {
 
                     val left   = node.left()
@@ -262,10 +260,10 @@ object KDTreeD {
                     val bottom = node.bottom()
                     val top    = node.top()
 
-                    this.intersectRay(DoubleVector2D(left,                   top    + dimMin / 2.0), horizontalUnit, right - left, ::visit) // top ray
-                    this.intersectRay(DoubleVector2D(left,                   bottom - dimMin / 2.0), horizontalUnit, right - left, ::visit) // bottom ray
-                    this.intersectRay(DoubleVector2D(left  - dimMin / 2.0, bottom),                  verticalUnit,   top - bottom, ::visit) // left ray
-                    this.intersectRay(DoubleVector2D(right + dimMin / 2.0, bottom),                  verticalUnit,   top - bottom, ::visit) // right ray
+                    this.intersectRay(DoubleVector2D(left, top    + halfDimMin),  horizontalUnit, right - left, ::visit) // top ray
+                    this.intersectRay(DoubleVector2D(left, bottom - halfDimMin),  horizontalUnit, right - left, ::visit) // bottom ray
+                    this.intersectRay(DoubleVector2D(left  - halfDimMin, bottom), verticalUnit,   top - bottom, ::visit) // left ray
+                    this.intersectRay(DoubleVector2D(right + halfDimMin, bottom), verticalUnit,   top - bottom, ::visit) // right ray
                     node = queue.pollFirst()
                 }
             }
@@ -369,7 +367,6 @@ object KDTreeD {
         override val children = arrayOf<Node?>(null, null)
         override val halfDim = if(SplitAxis.XAxis == splitAxis) xDim / 2.0 else yDim / 2.0
         override fun canSplit() = SplitAxis.XAxis == splitAxis && xDim > dimMin || SplitAxis.YAxis == splitAxis && yDim > dimMin
-
 
         fun setOccupied(x1: Double, y1: Double, x2: Double, y2: Double) {
 

@@ -8,7 +8,6 @@ package jpm.lib
 import javafx.application.Application
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 //import javafx.scene.text.Font
 import javafx.stage.Stage
 import jpm.lib.graph.algorithms.AStarAlgorithm
@@ -78,7 +77,7 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
     }
 
     override fun drawShapesKDTreeD(gc: GraphicsContext) {
-       for(i in 1..1)  {
+       for(i in 1..19)  {
            gc.clearRect(0.0, 0.0, gc.canvas.width, gc.canvas.height)
            drawShapesKDTreeD1(gc)
        }

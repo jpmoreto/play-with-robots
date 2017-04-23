@@ -10,7 +10,7 @@ import java.util.*
  *
  */
 
-class QuadTreeTest {
+class KDTreeTest {
 
     val dimMin = 4
     val occupiedThreshold = 0.7
@@ -26,10 +26,6 @@ class QuadTreeTest {
     // intersection parameters Double
     val pd = DoubleVector2D(-2010.0,2010.0)
     val vd = DoubleVector2D(400.0,400.0)
-
-    // intersection parameters Double
-    val pi = IntVector2D(-2100,2100)
-    val vi = IntVector2D(400,400)
 
     val tmax = 1000.0
 
@@ -118,8 +114,8 @@ class QuadTreeTest {
 
         countOccupied("same random", tree, rndDX1_a, rndDY1_a)
 
-        val rndDX_a = Random(101)
-        val rndDY_a = Random(1013451)
+        //val rndDX_a = Random(101)
+        //val rndDY_a = Random(1013451)
 
         //val set_a_1 = countOccupied("different random", tree, rndDX_a, rndDY_a)
         setFree("", tree, rndX_a, rndY_a)
@@ -323,143 +319,3 @@ class QuadTreeTest {
         return occupiedSet
     }
 }
-
-/*
-
-QuadTree:
-Node(IntVector2D(x=-382, y=-34),4,0,1,true, 0.0)
-Node(IntVector2D(x=-374, y=-58),4,1,0,true, 1.0)
-Node(IntVector2D(x=-302, y=-174),4,1,0,true, 1.0)
-Node(IntVector2D(x=-258, y=-230),4,1,0,true, 1.0)
-Node(IntVector2D(x=-178, y=-30),4,1,0,true, 1.0)
-Node(IntVector2D(x=-166, y=-118),4,0,1,true, 0.0)
-Node(IntVector2D(x=-78, y=-18),4,0,1,true, 0.0)
-Node(IntVector2D(x=-110, y=-70),4,0,1,true, 0.0)
-Node(IntVector2D(x=-50, y=-98),4,1,0,true, 1.0)
-Node(IntVector2D(x=-242, y=-238),4,0,1,true, 0.0)
-Node(IntVector2D(x=-150, y=-250),4,0,1,true, 0.0)
-Node(IntVector2D(x=-30, y=-206),4,0,1,true, 0.0)
-Node(IntVector2D(x=-274, y=-266),4,0,1,true, 0.0)
-Node(IntVector2D(x=-318, y=-386),4,1,0,true, 1.0)
-Node(IntVector2D(x=-154, y=-286),4,1,0,true, 1.0)
-Node(IntVector2D(x=-190, y=-298),4,0,1,true, 0.0)
-Node(IntVector2D(x=-34, y=-262),4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-302),4,1,0,true, 1.0)
-Node(IntVector2D(x=-114, y=-378),4,0,1,true, 0.0)
-Node(IntVector2D(x=-18, y=-342),4,1,0,true, 1.0)
-
-
-KDTree:
-Node(IntVector2D(x=-50, y=-98),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-78, y=-18),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-110, y=-66),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-30, y=-202),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-178, y=-30),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-166, y=-118),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-150, y=-250),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-242, y=-238),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-34, y=-262),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-298),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-18, y=-338),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-114, y=-378),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-154, y=-282),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-190, y=-294),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-382, y=-30),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-374, y=-54),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-302, y=-174),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-258, y=-226),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-274, y=-266),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-318, y=-386),XAxis,4,4,1,0,true, 1.0)
-
-
-
-
-QuadTree:
-Node(IntVector2D(x=-110, y=-70),4,0,1,true, 0.0)
-Node(IntVector2D(x=-114, y=-378),4,0,1,true, 0.0)
-Node(IntVector2D(x=-150, y=-250),4,0,1,true, 0.0)
-Node(IntVector2D(x=-154, y=-286),4,1,0,true, 1.0)
-Node(IntVector2D(x=-166, y=-118),4,0,1,true, 0.0)
-Node(IntVector2D(x=-178, y=-30),4,1,0,true, 1.0)
-Node(IntVector2D(x=-18, y=-342),4,1,0,true, 1.0)
-Node(IntVector2D(x=-190, y=-298),4,0,1,true, 0.0)
-Node(IntVector2D(x=-242, y=-238),4,0,1,true, 0.0)
-Node(IntVector2D(x=-258, y=-230),4,1,0,true, 1.0)
-Node(IntVector2D(x=-274, y=-266),4,0,1,true, 0.0)
-Node(IntVector2D(x=-302, y=-174),4,1,0,true, 1.0)
-Node(IntVector2D(x=-30, y=-206),4,0,1,true, 0.0)
-Node(IntVector2D(x=-318, y=-386),4,1,0,true, 1.0)
-Node(IntVector2D(x=-34, y=-262),4,1,0,true, 1.0)
-Node(IntVector2D(x=-374, y=-58),4,1,0,true, 1.0)
-Node(IntVector2D(x=-382, y=-34),4,0,1,true, 0.0)
-Node(IntVector2D(x=-50, y=-302),4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-98),4,1,0,true, 1.0)
-Node(IntVector2D(x=-78, y=-18),4,0,1,true, 0.0)
-
-QuadTree:
-Node(IntVector2D(x=-110, y=-70),4,1,0,true, 1.0)
-Node(IntVector2D(x=-114, y=-378),4,1,0,true, 1.0)
-Node(IntVector2D(x=-150, y=-250),4,1,0,true, 1.0)
-Node(IntVector2D(x=-154, y=-286),4,1,0,true, 1.0)
-Node(IntVector2D(x=-166, y=-118),4,1,0,true, 1.0)
-Node(IntVector2D(x=-178, y=-30),4,1,0,true, 1.0)
-Node(IntVector2D(x=-18, y=-342),4,1,0,true, 1.0)
-Node(IntVector2D(x=-190, y=-298),4,1,0,true, 1.0)
-Node(IntVector2D(x=-242, y=-238),4,1,0,true, 1.0)
-Node(IntVector2D(x=-258, y=-230),4,1,0,true, 1.0)
-Node(IntVector2D(x=-274, y=-266),4,1,0,true, 1.0)
-Node(IntVector2D(x=-302, y=-174),4,1,0,true, 1.0)
-Node(IntVector2D(x=-30, y=-206),4,1,0,true, 1.0)
-Node(IntVector2D(x=-318, y=-386),4,1,0,true, 1.0)
-Node(IntVector2D(x=-34, y=-262),4,1,0,true, 1.0)
-Node(IntVector2D(x=-374, y=-58),4,1,0,true, 1.0)
-Node(IntVector2D(x=-382, y=-34),4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-302),4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-98),4,1,0,true, 1.0)
-Node(IntVector2D(x=-78, y=-18),4,1,0,true, 1.0)
-
-KDTree:
-Node(IntVector2D(x=-110, y=-66),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-114, y=-378),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-150, y=-250),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-154, y=-282),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-166, y=-118),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-178, y=-30),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-18, y=-338),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-190, y=-294),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-242, y=-238),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-258, y=-226),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-274, y=-266),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-302, y=-174),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-30, y=-202),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-318, y=-386),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-34, y=-262),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-374, y=-54),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-382, y=-30),XAxis,4,4,0,1,true, 0.0)
-Node(IntVector2D(x=-50, y=-298),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-98),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-78, y=-18),XAxis,4,4,0,1,true, 0.0)
-
-KDTree:
-Node(IntVector2D(x=-110, y=-70),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-114, y=-378),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-150, y=-250),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-154, y=-286),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-166, y=-118),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-178, y=-30),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-18, y=-342),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-190, y=-298),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-242, y=-238),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-258, y=-230),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-274, y=-266),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-302, y=-174),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-30, y=-206),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-318, y=-386),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-34, y=-262),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-374, y=-58),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-382, y=-34),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-302),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-50, y=-98),XAxis,4,4,1,0,true, 1.0)
-Node(IntVector2D(x=-78, y=-18),XAxis,4,4,1,0,true, 1.0)
-
-*/

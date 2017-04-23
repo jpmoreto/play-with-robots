@@ -2,3 +2,5 @@ git add *
 git rm <file>
 git clone https://github.com/jpmoreto/play-with-robots.git
 git status
+git commit -m "<message>"
+git push

@@ -1,7 +1,7 @@
 *.class
 *.jar
 *.iml
-.idea/
+**/.idea/
 *.apk
 *.ap_
 *.dex

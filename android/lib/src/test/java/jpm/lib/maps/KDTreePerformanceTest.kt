@@ -11,9 +11,8 @@ import java.util.*
  *
  */
 
-class XTreePerformanceTest {
+class KDTreePerformanceTest {
     val dimMin = 4
-    val occupiedThreshold = 0.7
     val occupiedGlobalThreshold = 0.8
     val initialDim = Math.round(Math.pow(2.0, 14.0).toFloat())
     val centerPointD = DoubleVector2D(0.0, 0.0)
@@ -31,28 +30,13 @@ class XTreePerformanceTest {
     val pd = DoubleVector2D(-3100.0,-100.0)
     val vd = DoubleVector2D(0.2,1.0)
 
-    // intersection parameters Double
-    val pi = IntVector2D(-2100,2100)
-    val vi = IntVector2D(400,400)
-
     val tmax = 1000.0
 
     init {
         KDTreeAbs.setThreshold(occupiedGlobalThreshold)
         KDTree.dimMin = dimMin
         KDTreeD.dimMin = dimMin.toDouble()
-         if(isFirst) {
-            isFirst = false
-            System.out.println("Sleep 30 seconds")
-            Thread.sleep(30000)
-            System.out.println("startTest")
-        }
     }
-
-    companion object {
-        var isFirst = false
-    }
-
 
     fun <T: KDTreeAbs.Node<T, V, N>, V: Vector2D<V, N>, N: Number> visit(t: T) {
         // do nothing
@@ -101,60 +85,11 @@ class XTreePerformanceTest {
             setOccupiedD(tree,rndX,rndY)
         }
 
-        var countVisits = 0
-        var minDistance = vd.length() * tmax
-
-        fun visit(tree: KDTreeD.Node, p: DoubleVector2D, v: DoubleVector2D, t: Double): Boolean {
-            val distance = (p - pd).length()
-            if(tree.isLeaf) {
-                println("visit(${tree.toStringNode()},$p,$v,$t) distance = $distance, minDistance = $minDistance")
-                countVisits += 1
-
-                if(distance < minDistance && tmax > t) {
-                    minDistance = distance
-                }
-            }
-            if(distance > minDistance && tmax > t) return false
-            return true
-        }
-
+        var min:DoubleVector2D? = DoubleVector2D(0.0,0.0)
         measure("intersectRay KDTreeD($initialDim), iterations = $iterations") {
-            tree.intersectRay(pd,vd,tmax,::visit)
+            min = tree.intersectRayMinPoint(pd,vd,tmax,0.7)
         }
-        println("countVisits = $countVisits")
-    }
-
-    @Test
-    fun testIntersectRay_KDTree() {
-
-        val tree = KDTree.Node(centerPoint, KDTreeAbs.SplitAxis.XAxis, initialDim)
-        val rndX = Random(43)
-        val rndY = Random(101)
-
-        measure("setOccupied KDTree($initialDim), iterations = $iterations") {
-            setOccupied(tree,rndX,rndY)
-        }
-
-        var countVisits = 0
-        var minDistance = vd.length() * tmax
-        fun visit(tree: KDTree.Node, p: DoubleVector2D, v: DoubleVector2D, t: Double): Boolean {
-            val distance = (p - pd).length()
-            if(tree.isLeaf) {
-                println("visit(${tree.toStringNode()},$p,$v,$t) distance = $distance, minDistance = $minDistance")
-                countVisits += 1
-
-                if(distance < minDistance && tmax > t) {
-                    minDistance = distance
-                }
-            }
-            //if(distance > minDistance && tmax > t) return false
-            return true
-        }
-
-        measure("intersectRay KDTreeD($initialDim), iterations = $iterations") {
-            tree.intersectRay(pd,vd,tmax,::visit)
-        }
-        println("countVisits = $countVisits")
+        println("min = $min")
     }
 
     fun <T: KDTreeAbs.Node<T, V, N>, V: Vector2D<V, N>, N: Number> visitAll(tree: T) {

@@ -76,65 +76,27 @@ class KDTreeDRayTracing : TestKDTreeDBase, Application() {
         val blue = Color(Color.BLUE.red, Color.BLUE.green, Color.BLUE.blue, 0.7)
         setGcColor(gc,blue,blue,1.0)
 
+        val trayEnd = pd + vd * tmax
         var nearPointFromPd = pd + vd * tmax
 
         val dim = 2.0
         val f = 3.0
 
-        println("nearPointFromPd = $nearPointFromPd")
+        println("firstPoint = $pd, lastPoint = $nearPointFromPd")
+
+        var countIterations = 0
         fun visit(tree: KDTreeD.Node, p: DoubleVector2D, v: DoubleVector2D, t: Double): Boolean {
 
             if (tree.isLeaf && tree.occupied() > occupiedThreshold) {
 
-                val trayEnd = p + v * t
+                countIterations += 1
 
-                val intersectionPointLeft = lineIntersection(
-                    DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                    DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                    p,
-                    trayEnd)
-
-                val intersectionPointRight = lineIntersection(
-                    DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                    DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                    p,
-                    trayEnd)
-
-                val intersectionPointBottom = lineIntersection(
-                    DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                    DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y - tree.yDim / 2.0),
-                    p,
-                    trayEnd)
-
-                val intersectionPointTop = lineIntersection(
-                    DoubleVector2D(tree.center.x - tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                    DoubleVector2D(tree.center.x + tree.xDim / 2.0, tree.center.y + tree.yDim / 2.0),
-                    p,
-                    trayEnd)
-
-                val possibleIntersectionPoints = arrayOf(intersectionPointLeft,intersectionPointRight,intersectionPointBottom,intersectionPointTop)
-
-                val intersectionPoints = possibleIntersectionPoints.filter { it != null }.toTypedArray()
-
-                val intersectionPoint =
-                    if(intersectionPoints.size == 1) {
-                       if(intersectionPoints[0]?.first == intersectionPoints[0]?.second)  {
-                           intersectionPoints[0]?.first
-                       } else {
-                           DoubleVector2D(
-                               (intersectionPoints[0]!!.first.x  + intersectionPoints[0]!!.second.x) / 2.0,
-                               (intersectionPoints[0]!!.first.y  + intersectionPoints[0]!!.second.y) / 2.0)
-                       }
-                    } else {
-                        DoubleVector2D(
-                            (intersectionPoints[0]!!.first.x  + intersectionPoints[1]!!.first.x) / 2.0,
-                            (intersectionPoints[0]!!.first.y  + intersectionPoints[1]!!.first.y) / 2.0)
-                    }
+                val intersectionPoint = tree.intersectionPoint(p,trayEnd)
 
                 if((pd - intersectionPoint!!).length() < (pd - nearPointFromPd).length()) {
                     nearPointFromPd = intersectionPoint
                 }
-                println("visit(${tree.toStringNode()},$p,$v,$t) nearPointFromPd = $nearPointFromPd")
+                //println("visit(${tree.toStringNode()},$p,$v,$t) nearPointFromPd = $nearPointFromPd")
 
                 val center = intersectionPoint
                 //gc.fillRect(tree.center.x - tree.getDimVector().x, tree.center.y - tree.getDimVector().y, tree.getDimVector().x * 2, tree.getDimVector().y * 2)
@@ -146,8 +108,11 @@ class KDTreeDRayTracing : TestKDTreeDBase, Application() {
 
             return true
         }
+
         tree.intersectRay(pd, vd, tmax, ::visit)
         val near = tree.intersectRayMinPoint(pd, vd, tmax, occupiedThreshold)
+        println("nearPointFromPd = $nearPointFromPd, countIterations = $countIterations")
+        println("near = $near")
         //gc.strokeOval(nearPointFromPd.x - dim / 2.0 - 3 * f, nearPointFromPd.y  - dim / 2.0 - 3 * f, dim + 6 * f, dim + 6 * f)
         if(near != null) {
             gc.strokeOval(near.x - dim / 2.0 - 3 * f, near.y - dim / 2.0 - 3 * f, dim + 6 * f, dim + 6 * f)

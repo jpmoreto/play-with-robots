@@ -6,7 +6,6 @@ import jpm.lib.maps.KDTreeD
 import jpm.lib.math.DoubleVector2D
 import jpm.lib.math.RectangleContext
 import jpm.lib.math.Side
-import java.util.TreeSet
 
 /**
  * Created by jm on 25/03/17.
@@ -27,8 +26,8 @@ object GraphBuilder {
 
         fun addHorizontal(nodesToAdd: ObjectAVLTreeSet<WeightedSpaceGraph.Node>, r: RectangleContext, other: RectangleContext, y: Double) {
 
-            val xMin = if(other.p1.x < r.p1.x) r.p1.x else other.p1.x
-            val xMax = if(other.p2.x > r.p2.x) r.p2.x else other.p2.x
+            val xMin = Math.max(other.p1.x,r.p1.x)
+            val xMax = Math.min(other.p2.x,r.p2.x)
 
             val middlePoint = DoubleVector2D((xMin + xMax) / 2.0, y)
 
@@ -43,8 +42,8 @@ object GraphBuilder {
 
         fun addVertical(nodesToAdd: ObjectAVLTreeSet<WeightedSpaceGraph.Node>, r: RectangleContext, other: RectangleContext, x: Double) {
 
-            val yMin = if(other.p1.y < r.p1.y) r.p1.y else other.p1.y
-            val yMax = if(other.p2.y > r.p2.y) r.p2.y else other.p2.y
+            val yMin = Math.max(other.p1.y,r.p1.y)
+            val yMax = Math.min(other.p2.y,r.p2.y)
 
             val middlePoint = DoubleVector2D(x, (yMin + yMax) / 2.0)
 

@@ -8,10 +8,6 @@ import java.util.concurrent.BlockingQueue
 
 class Broker(bufferRecCapacity: Int) {
 
-    init {
-        //Log.i("Broker","Broker($useMock,$maxMessageTypes,$bufferSendInitialCapacity,$bufferRecInitialCapacity)")
-    }
-
     private val messageListeners = mutableMapOf<Byte,MutableList<MessageListener>>()
 
     private val recQueue = ArrayBlockingQueue<Message>(bufferRecCapacity)
@@ -23,12 +19,8 @@ class Broker(bufferRecCapacity: Int) {
         threadNotifier.start()
     }
 
-    fun stop() {
-        send(StopBrokerMessage)
-    }
-    fun send(message: Message) {
-        recQueue.offer(message)
-    }
+    fun stop() = send(StopBrokerMessage)
+    fun send(message: Message) = recQueue.offer(message)
 
     @Synchronized
     fun setListener(header: Byte, listener: MessageListener) {
