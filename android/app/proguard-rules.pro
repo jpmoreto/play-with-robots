@@ -15,18 +15,23 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--optimizationpasses 10
+-optimizationpasses 2
 -allowaccessmodification
 -optimizations */*/*
 # obfuscation will break reflection and
 # make these rules much more complex
-#-dontobfuscate
+-dontobfuscate
 
-#-keep class com.androidplot.** { *; }
-#-keep class android.support.design.widget.** { *; }
-#-keep interface android.support.design.widget.** { *; }
+-keep class com.androidplot.** { *; }
+-keep class android.support.design.widget.** { *; }
+-keep interface android.support.design.widget.** { *; }
+-keep class com.jmedeisis.bugstick.JoystickListener
+-keep class com.jmedeisis.bugstick.Joystick$MotionConstraint
 
 #######################################################################################
+#-keep class kotlin.coroutines.experimental.SafeContinuation
+#-keep class android.content.AsyncQueryHandler$WorkerArgs
+#-keep class kotlin.reflect.jvm.internal.ReflectionFactoryImpl
 #-keep class kotlin.internal.JRE8PlatformImplementations
 #-keep class kotlin.internal.JRE7PlatformImplementations
 #-keep class kotlin.reflect.jvm.internal.ReflectionFactoryImpl
