@@ -34,7 +34,7 @@ class Broker(bufferRecCapacity: Int) {
      */
     fun setListener(header: Byte, listener: MessageListener) {
         synchronized(messageListeners) {
-            var listeners = messageListeners.get(header)
+            var listeners = messageListeners[header]
             if (listeners == null) {
                 listeners = mutableListOf<MessageListener>()
                 messageListeners.put(header, listeners)
@@ -45,7 +45,7 @@ class Broker(bufferRecCapacity: Int) {
 
     fun removeListener(header: Byte, listener: MessageListener) {
         synchronized(messageListeners) {
-            val listeners = messageListeners.get(header)
+            val listeners = messageListeners[header]
             if (listeners != null) {
                 listeners.remove(listener)
                 if (listeners.isEmpty()) messageListeners.remove(header)
@@ -59,7 +59,7 @@ class Broker(bufferRecCapacity: Int) {
             try {
                 val m = recQueue.take()
                 synchronized(messageListeners) {
-                    val listeners =  messageListeners.get(m.header)
+                    val listeners = messageListeners[m.header]
                     if(listeners != null)
                         for (l in listeners) l.onMessage(m)
                 }

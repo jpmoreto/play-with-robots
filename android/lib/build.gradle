@@ -3,6 +3,7 @@ apply plugin: 'kotlin'
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    testCompile project(':messages')
     compile "it.unimi.dsi:fastutil:7.1.0"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

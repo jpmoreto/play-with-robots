@@ -18,7 +18,7 @@ import com.jmedeisis.bugstick.Joystick
 import com.jmedeisis.bugstick.JoystickListener
 import jpm.android.App
 import jpm.android.R
-import jpm.android.messages.JoystickMessage
+import jpm.messages.JoystickMessage
 import jpm.android.navigation.JoystickNavigator
 import jpm.android.ui.common.BaseFragment
 

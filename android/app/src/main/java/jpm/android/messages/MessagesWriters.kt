@@ -6,7 +6,13 @@ import java.io.IOException
 import jpm.android.messages.BitOper.toInt
 import jpm.android.messages.BitOper.toLong
 import jpm.lib.comm.Message
-import jpm.lib.comm.MessageType
+import jpm.messages.CompassCalibrationValuesMessage
+import jpm.messages.LogMessage
+import jpm.messages.MotorsSpeedMessage
+import jpm.messages.MpuAndSpeedSensorsValuesMessage
+import jpm.messages.UsArrayDistancesMessage
+import jpm.messages.MpuSensorsValuesMessage
+import jpm.messages.VccPowerMessage
 
 private fun readInt(inStream: DataInputStream): Int {
     val msb = inStream.readByte()
@@ -64,9 +70,6 @@ class MotorsSpeedMessageReader: MessageReader {
 
         return MotorsSpeedMessage(timeStamp, frontLeftSpeed, frontRightSpeed,backLeftSpeed,backRightSpeed)
     }
-
-    class MotorsSpeedMessage(time: Long, val frontLeftSpeed: Int, val frontRightSpeed: Int, val backLeftSpeed: Int, val backRightSpeed: Int):
-        Message(MessageType.MotorsSpeed.header, 0, time)
 }
 
 class UsArrayDistancesReader: MessageReader {
@@ -79,9 +82,6 @@ class UsArrayDistancesReader: MessageReader {
 
         return UsArrayDistancesMessage(timeStamp, distances)
     }
-
-    class UsArrayDistancesMessage(time: Long, val distances: IntArray):
-        Message(MessageType.UsArrayDistances.header,0,time)
 }
 
 class MpuSensorsValuesReader: MessageReader {
@@ -99,9 +99,6 @@ class MpuSensorsValuesReader: MessageReader {
 
         return MpuSensorsValuesMessage(timeStamp, accelerometer, gyroscope, compass,temperature)
     }
-
-    class MpuSensorsValuesMessage(time: Long, val accelerometer: IntArray, val gyroscope: IntArray, val compass: IntArray, val temperature: Int):
-        Message(MessageType.MpuSensorsValues.header,0,time)
 }
 
 class CompassCalibrationValuesReader: MessageReader {
@@ -118,9 +115,6 @@ class CompassCalibrationValuesReader: MessageReader {
 
         return CompassCalibrationValuesMessage(timeStamp, compassBias, compassScale, factoryCompassCalibration)
     }
-
-    class CompassCalibrationValuesMessage(time: Long, val compassBias: FloatArray, val compassScale: FloatArray, val factoryCompassCalibration: FloatArray):
-        Message(MessageType.CompassCalibrationValues.header,0,time)
 }
 
 class VccPowerReader: MessageReader {
@@ -132,9 +126,6 @@ class VccPowerReader: MessageReader {
 
         return VccPowerMessage(timeStamp, vcc)
     }
-
-    class VccPowerMessage(time: Long, val vcc: Int):
-        Message(MessageType.VccPower.header,0,time)
 }
 
 class LogMessageReader : MessageReader {
@@ -147,9 +138,6 @@ class LogMessageReader : MessageReader {
 
         return LogMessage(timeStamp, severity, log)
     }
-
-    class LogMessage(time: Long, val severity: Int, val log: String):
-        Message(MessageType.Log.header,0,time)
 }
 
 class MpuAndSpeedSensorsValuesReader: MessageReader {
@@ -173,15 +161,4 @@ class MpuAndSpeedSensorsValuesReader: MessageReader {
                 timeStamp, accelerometer, gyroscope, compass,temperature,
                 frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed)
     }
-
-    class MpuAndSpeedSensorsValuesMessage(
-            time: Long,
-            val accelerometer: IntArray,
-            val gyroscope: IntArray,
-            val compass: IntArray,
-            val temperature: Int,
-            val frontLeftSpeed: Int,
-            val frontRightSpeed: Int,
-            val backLeftSpeed: Int,
-            val backRightSpeed: Int): Message(MessageType.MpuAndSpeedSensorsValues.header,0,time)
 }

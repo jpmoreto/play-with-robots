@@ -7,7 +7,7 @@ import jpm.android.messages.*
 import jpm.android.navigation.JoystickNavigator
 //import jpm.android.positionandmapping.PositionAndMappingBase
 import jpm.lib.comm.Broker
-import jpm.lib.comm.MessageType
+import jpm.messages.MessageType
 
 
 object App {

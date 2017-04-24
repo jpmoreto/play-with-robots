@@ -14,7 +14,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import jpm.android.App
-import jpm.android.messages.ChangeGraphVisibility
+import jpm.messages.ChangeGraphVisibility
 import kotlinx.android.synthetic.main.activity_main.*
 
 

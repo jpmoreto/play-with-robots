@@ -2,13 +2,15 @@ package jpm.android.positionandmapping
 
 import jpm.android.App
 import jpm.lib.math.*
-import jpm.android.messages.*
 import jpm.android.positionandmapping.ahrs.FusionAhrs
 import jpm.android.robot.Pose
 import jpm.android.robot.RobotDimensions.distanceWheel
 import jpm.lib.comm.Message
 import jpm.lib.comm.MessageListener
-import jpm.lib.comm.MessageType
+import jpm.messages.CompassCalibrationValuesMessage
+import jpm.messages.MessageType
+import jpm.messages.MpuAndSpeedSensorsValuesMessage
+import jpm.messages.NewPoseMessage
 
 /**
  * Created by jm on 20/02/17.
@@ -280,12 +282,12 @@ class PositionAndMappingBase : MessageListener {
     var lastPose = Pose(0,0.0,0.0,0.0)
 
     override fun onMessage(message: Message) {
-        if (message is CompassCalibrationValuesReader.CompassCalibrationValuesMessage) {
+        if (message is CompassCalibrationValuesMessage) {
             compassBias = message.compassBias
             compassScale = message.compassScale
             factoryCompassCalibration = message.factoryCompassCalibration
             compassCalibrationDone = true
-        } else if (message is MpuAndSpeedSensorsValuesReader.MpuAndSpeedSensorsValuesMessage) {
+        } else if (message is MpuAndSpeedSensorsValuesMessage) {
 
             if (lastPose.time != 0L) {
                 val gyroscope = toDegreesPerSecond(message.gyroscope)

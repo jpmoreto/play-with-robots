@@ -1,5 +1,6 @@
 package jpm.lib.comm
 
+import jpm.messages.MessageType
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -40,7 +41,7 @@ class BrokerTst {
         broker.start()
 
         val listener0 = TestListener("0",2)
-        broker.setListener(MessageType.ChangeGraphVisibility.header,listener0)
+        broker.setListener(MessageType.ChangeGraphVisibility.header, listener0)
 
         val listener1 = TestListener("1",1)
         broker.setListener(MessageType.Joystick.header,listener1)

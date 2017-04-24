@@ -11,9 +11,11 @@ import android.view.ViewGroup
 import com.androidplot.xy.*
 import jpm.android.App
 import jpm.android.R
-import jpm.android.messages.*
 import jpm.android.ui.common.BaseFragment
-import jpm.lib.comm.MessageType
+import jpm.messages.ChangeGraphVisibility
+import jpm.messages.MessageType
+import jpm.messages.MotorsSpeedMessage
+import jpm.messages.MpuSensorsValuesMessage
 
 class ChartFragment : BaseFragment() {
 
@@ -61,7 +63,7 @@ class ChartFragment : BaseFragment() {
     }
 
     override fun onMessage(message: jpm.lib.comm.Message) {
-        if(message is MpuSensorsValuesReader.MpuSensorsValuesMessage) {
+        if(message is MpuSensorsValuesMessage) {
             data!!.addDataPoint(0,message.time,message.accelerometer[0])
             data!!.addDataPoint(1,message.time,message.accelerometer[1])
             data!!.addDataPoint(2,message.time,message.accelerometer[2])
@@ -74,7 +76,7 @@ class ChartFragment : BaseFragment() {
             data!!.addDataPoint(7,message.time,message.compass[1])
             data!!.addDataPoint(8,message.time,message.compass[2])
             data!!.redraw()
-        } else if(message is MotorsSpeedMessageReader.MotorsSpeedMessage) {
+        } else if(message is MotorsSpeedMessage) {
             data!!.addDataPoint(9,message.time,message.frontLeftSpeed)
             data!!.addDataPoint(10,message.time,message.frontRightSpeed)
             data!!.addDataPoint(11,message.time,message.backLeftSpeed)

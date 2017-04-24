@@ -53,7 +53,7 @@ class Bluetooth(val broker: Broker,bufferRecCapacity: Int): MessageListener {
                 if(inStream.available() > 0) {
                     val header = inStream.readByte()
                     synchronized(readers) {
-                        val reader =  readers.get(header)
+                        val reader = readers[header]
                         if(reader != null) broker.send(reader.read(inStream))
                     }
                 } else {

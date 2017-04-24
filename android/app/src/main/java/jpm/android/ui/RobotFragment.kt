@@ -13,11 +13,11 @@ import android.view.View
 import android.view.ViewGroup
 import jpm.android.App
 import jpm.android.R
-import jpm.android.messages.UsArrayDistancesReader
 import jpm.android.robot.Robot
 import jpm.android.ui.common.BaseFragment
 import jpm.android.ui.common.ZoomAndMoveView
-import jpm.lib.comm.MessageType
+import jpm.messages.MessageType
+import jpm.messages.UsArrayDistancesMessage
 
 class RobotFragment : BaseFragment() {
 
@@ -45,7 +45,7 @@ class RobotFragment : BaseFragment() {
     }
 
     override fun handleMessage(message: jpm.lib.comm.Message) {
-        if(message is UsArrayDistancesReader.UsArrayDistancesMessage) {
+        if(message is UsArrayDistancesMessage) {
             robotView!!.setPoseAndUSSensors(456.1f, 3536.33f, 45.3f, message.distances)
         }
     }

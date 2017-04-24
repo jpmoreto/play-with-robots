@@ -2,12 +2,9 @@ package jpm.android.messages
 
 import jpm.android.comm.MessageWriter
 import jpm.lib.comm.Message
-import jpm.lib.comm.MessageType
+import jpm.messages.SetVelocityMessage
 import java.io.DataOutputStream
 import java.io.IOException
-
-class SetVelocityMessage(time: Long, val leftVelocity: Int, val rightVelocity: Int): Message(MessageType.SetVelocity.header,10,time)
-class StopMessage(time: Long): Message(MessageType.Stop.header,10,time)
 
 class CommandStopMessageWriter : MessageWriter {
     @Throws(IOException::class)

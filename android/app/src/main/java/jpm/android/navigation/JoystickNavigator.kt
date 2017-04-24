@@ -1,11 +1,11 @@
 package jpm.android.navigation
 
 import jpm.android.App
-import jpm.android.messages.JoystickMessage
-import jpm.android.messages.SetVelocityMessage
+import jpm.messages.JoystickMessage
+import jpm.messages.SetVelocityMessage
 import jpm.lib.comm.Message
 import jpm.lib.comm.MessageListener
-import jpm.lib.comm.MessageType
+import jpm.messages.MessageType
 
 /**
  * Created by jm on 20/02/17.

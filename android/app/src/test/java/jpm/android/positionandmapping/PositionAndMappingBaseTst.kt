@@ -7,6 +7,7 @@ import org.junit.Test
 
 /**
  * Created by jm on 06/03/17.
+ *
  */
 class PositionAndMappingBaseTst {
 
