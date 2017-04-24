@@ -46,7 +46,7 @@ Os testes realizados num portatil Quad Core i5 2.50GHz (usando somente uma threa
 * tamanho do caminho inicialmente gerado com o algoritmo **AStarAlgorithm** = passa por +- 70 nós
 * tamanho do caminho depois de optimizado = passa por +- 30 nós
 
-+- 60% do tempo (100 ms) corresponde ao algoritmo de compactação dos rectangulos (mas depois de testes verifiquei que se não compactar os tempos totais são maiores).
++- 70% do tempo (70 ms em 100 ms) corresponde ao algoritmo de compactação dos rectangulos (mas depois de testes verifiquei que se não compactar os tempos totais são maiores).
 Estes tempos podem ser reproduzidos utilizando a classe de testes **KDTreeDBuildGraphPath**.
 
 Ainda não testei em android correr um teste equivalente, mas o tempo de execução (que será bastante maior) poderá afectar as estratégias de navegação a utilizar.

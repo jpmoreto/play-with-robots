@@ -4,7 +4,6 @@ import java.io.Serializable
 
 enum class MessageType(val header: Byte) {
     // special message
-    StopBroker(0),
     // out messages
     Stop(10),
     SetVelocity(11),
@@ -27,6 +26,14 @@ interface MessageListener {
     fun onMessage(message: Message)
 }
 
-abstract class Message(val header: Byte): Serializable
+abstract class Message(val header: Byte, val priority: Int, val time: Long): Serializable, Comparable<Message> {
 
-object StopBrokerMessage: Message(MessageType.StopBroker.header)
+    override operator fun compareTo(other: Message): Int {
+        if (this.priority < other.priority)
+            return -1
+        else if (this.priority > other.priority)
+            return 1
+        else
+            return time.compareTo(other.time)
+    }
+}

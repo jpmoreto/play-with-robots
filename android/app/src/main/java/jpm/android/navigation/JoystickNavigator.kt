@@ -1,12 +1,11 @@
 package jpm.android.navigation
 
 import jpm.android.App
-import jpm.android.com.Message
-import jpm.android.com.MessageListener
-import jpm.android.messages.CommandVelocityMessageWriter
-import jpm.android.messages.InternalMessageType
 import jpm.android.messages.JoystickMessage
-import jpm.android.messages.WriterMessageType
+import jpm.android.messages.SetVelocityMessage
+import jpm.lib.comm.Message
+import jpm.lib.comm.MessageListener
+import jpm.lib.comm.MessageType
 
 /**
  * Created by jm on 20/02/17.
@@ -88,14 +87,13 @@ solve([(vl-vr)/2 = v, vr * (d + 45)/45 = -vl],[vl,vr]);
 class JoystickNavigator: MessageListener {
 
     init {
-        App.getBroker().setListener(InternalMessageType.Joystick.header, this)
+        App.getBroker().setListener(MessageType.Joystick.header, this)
     }
 
     override fun onMessage(message: Message) {
         if (message is JoystickMessage) {
             val v = getVelocity(message.degrees,message.offset)
-            App.getBroker().send(WriterMessageType.COMMAND_VELOCITY.header,
-                    CommandVelocityMessageWriter(v.first,v.second))
+            App.getBroker().send(SetVelocityMessage(System.currentTimeMillis(),v.first, v.second))
         }
     }
 

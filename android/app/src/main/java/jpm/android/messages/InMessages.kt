@@ -1,11 +1,12 @@
 package jpm.android.messages
 
-import jpm.android.com.Message
-import jpm.android.com.MessageReader
+import jpm.android.comm.MessageReader
 import java.io.DataInputStream
 import java.io.IOException
 import jpm.android.messages.BitOper.toInt
 import jpm.android.messages.BitOper.toLong
+import jpm.lib.comm.Message
+import jpm.lib.comm.MessageType
 
 private fun readInt(inStream: DataInputStream): Int {
     val msb = inStream.readByte()
@@ -51,16 +52,6 @@ private fun readFloatArrayFromString(array: FloatArray, inStream: DataInputStrea
     }
 }
 
-enum class ReaderMessageType(val header: Byte) {
-    MotorsSpeed(1),
-    UsArrayDistances(2),
-    MpuSensorsValues(3),
-    VccPower(4),
-    LOG(5),
-    MpuAndSpeedSensorsValues(6),
-    CompassCalibrationValues(7)
-}
-
 class MotorsSpeedMessageReader: MessageReader {
 
     @Throws(IOException::class)
@@ -74,7 +65,8 @@ class MotorsSpeedMessageReader: MessageReader {
         return MotorsSpeedMessage(timeStamp, frontLeftSpeed, frontRightSpeed,backLeftSpeed,backRightSpeed)
     }
 
-    class MotorsSpeedMessage(val timeStamp: Long, val frontLeftSpeed: Int, val frontRightSpeed: Int, val backLeftSpeed: Int, val backRightSpeed: Int): Message(ReaderMessageType.MotorsSpeed.header)
+    class MotorsSpeedMessage(time: Long, val frontLeftSpeed: Int, val frontRightSpeed: Int, val backLeftSpeed: Int, val backRightSpeed: Int):
+        Message(MessageType.MotorsSpeed.header, 0, time)
 }
 
 class UsArrayDistancesReader: MessageReader {
@@ -88,7 +80,8 @@ class UsArrayDistancesReader: MessageReader {
         return UsArrayDistancesMessage(timeStamp, distances)
     }
 
-    class UsArrayDistancesMessage(val timeStamp: Long, val distances: IntArray): Message(ReaderMessageType.UsArrayDistances.header)
+    class UsArrayDistancesMessage(time: Long, val distances: IntArray):
+        Message(MessageType.UsArrayDistances.header,0,time)
 }
 
 class MpuSensorsValuesReader: MessageReader {
@@ -107,7 +100,8 @@ class MpuSensorsValuesReader: MessageReader {
         return MpuSensorsValuesMessage(timeStamp, accelerometer, gyroscope, compass,temperature)
     }
 
-    class MpuSensorsValuesMessage(val timeStamp: Long, val accelerometer: IntArray, val gyroscope: IntArray, val compass: IntArray, val temperature: Int): Message(ReaderMessageType.MpuSensorsValues.header)
+    class MpuSensorsValuesMessage(time: Long, val accelerometer: IntArray, val gyroscope: IntArray, val compass: IntArray, val temperature: Int):
+        Message(MessageType.MpuSensorsValues.header,0,time)
 }
 
 class CompassCalibrationValuesReader: MessageReader {
@@ -125,7 +119,8 @@ class CompassCalibrationValuesReader: MessageReader {
         return CompassCalibrationValuesMessage(timeStamp, compassBias, compassScale, factoryCompassCalibration)
     }
 
-    class CompassCalibrationValuesMessage(val timeStamp: Long, val compassBias: FloatArray, val compassScale: FloatArray, val factoryCompassCalibration: FloatArray): Message(ReaderMessageType.CompassCalibrationValues.header)
+    class CompassCalibrationValuesMessage(time: Long, val compassBias: FloatArray, val compassScale: FloatArray, val factoryCompassCalibration: FloatArray):
+        Message(MessageType.CompassCalibrationValues.header,0,time)
 }
 
 class VccPowerReader: MessageReader {
@@ -138,7 +133,8 @@ class VccPowerReader: MessageReader {
         return VccPowerMessage(timeStamp, vcc)
     }
 
-    class VccPowerMessage(val timeStamp: Long, val vcc: Int): Message(ReaderMessageType.VccPower.header)
+    class VccPowerMessage(time: Long, val vcc: Int):
+        Message(MessageType.VccPower.header,0,time)
 }
 
 class LogMessageReader : MessageReader {
@@ -152,7 +148,8 @@ class LogMessageReader : MessageReader {
         return LogMessage(timeStamp, severity, log)
     }
 
-    class LogMessage(val timeStamp: Long, val severity: Int, val log: String): Message(ReaderMessageType.LOG.header)
+    class LogMessage(time: Long, val severity: Int, val log: String):
+        Message(MessageType.Log.header,0,time)
 }
 
 class MpuAndSpeedSensorsValuesReader: MessageReader {
@@ -178,7 +175,7 @@ class MpuAndSpeedSensorsValuesReader: MessageReader {
     }
 
     class MpuAndSpeedSensorsValuesMessage(
-            val timeStamp: Long,
+            time: Long,
             val accelerometer: IntArray,
             val gyroscope: IntArray,
             val compass: IntArray,
@@ -186,5 +183,5 @@ class MpuAndSpeedSensorsValuesReader: MessageReader {
             val frontLeftSpeed: Int,
             val frontRightSpeed: Int,
             val backLeftSpeed: Int,
-            val backRightSpeed: Int): Message(ReaderMessageType.MpuAndSpeedSensorsValues.header)
+            val backRightSpeed: Int): Message(MessageType.MpuAndSpeedSensorsValues.header,0,time)
 }

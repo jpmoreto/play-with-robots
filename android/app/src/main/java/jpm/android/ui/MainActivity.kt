@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         fun activateGraph(index: Int, activate: Boolean): Boolean {
             Log.i("MainActivity","activateGraph($index,$activate)")
-            App.getBroker().send(ChangeGraphVisibility(index,activate))
+            App.getBroker().send(ChangeGraphVisibility(System.currentTimeMillis(),index,activate))
             return true
         }
 

@@ -58,7 +58,7 @@ class ControlFragment : BaseFragment() {
                 offsetView.text = String.format(offsetValueString, offset, v.second)
 
                 bugView.setAngleAndOffset(degrees, offset)
-                App.getBroker().send(JoystickMessage(degrees, offset))
+                App.getBroker().send(JoystickMessage(System.currentTimeMillis(),degrees, offset))
             }
 
             override fun onUp() {
@@ -66,7 +66,7 @@ class ControlFragment : BaseFragment() {
                 offsetView.text = offsetNoneString
 
                 bugView.setAngleAndOffset(0f, 0f)
-                App.getBroker().send(JoystickMessage(90f, 0f))
+                App.getBroker().send(JoystickMessage(System.currentTimeMillis(),90f, 0f))
             }
         })
 

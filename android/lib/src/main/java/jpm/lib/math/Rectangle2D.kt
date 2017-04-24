@@ -2,6 +2,8 @@ package jpm.lib.math
 
 import it.unimi.dsi.fastutil.doubles.Double2ReferenceAVLTreeMap
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet
+import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet
+//import it.unimi.dsi.fastutil.objects.ReferenceArraySet
 
 /**
  * Created by jm on 25/03/17.
@@ -19,6 +21,16 @@ open class DoubleRectangle2D(val p1: DoubleVector2D, val p2: DoubleVector2D) {
 
     fun height() = p2.y - p1.y
     fun width()  = p2.x - p1.x
+
+    override fun equals(other: Any?): Boolean {
+        if(other is DoubleRectangle2D) {
+            return p1.x == other.p1.x && p1.y == other.p1.y && p2.x == other.p2.x && p2.y == other.p2.y
+        }
+        return false
+    }
+
+    override fun hashCode(): Int
+        = p1.hashCode().xor(p2.hashCode())
 }
 /*
 object CompareDoubleRectangle2DXY : Comparator<DoubleRectangle2D> {
@@ -95,14 +107,21 @@ enum class Side(val dir: Int, val oppositeDir: Int) {
 }
 
 class RectangleContext(p1: DoubleVector2D, p2: DoubleVector2D): DoubleRectangle2D(p1,p2) {
-
     val dirs = arrayOf(
-        ObjectAVLTreeSet<RectangleContext>(SimpleCompareDoubleRectangle2DXY),
-        ObjectAVLTreeSet<RectangleContext>(SimpleCompareDoubleRectangle2DXY),
-        ObjectAVLTreeSet<RectangleContext>(SimpleCompareDoubleRectangle2DYX),
-        ObjectAVLTreeSet<RectangleContext>(SimpleCompareDoubleRectangle2DYX)
+        ReferenceOpenHashSet<RectangleContext>(23),
+        ReferenceOpenHashSet<RectangleContext>(23),
+        ReferenceOpenHashSet<RectangleContext>(23),
+        ReferenceOpenHashSet<RectangleContext>(23)
     )
 
+/*
+    val dirs = arrayOf(
+        mutableSetOf<RectangleContext>(),
+        mutableSetOf<RectangleContext>(),
+        mutableSetOf<RectangleContext>(),
+        mutableSetOf<RectangleContext>()
+    )
+*/
     operator fun get(side: Side) = dirs[side.dir]
 
     fun contains(p: DoubleVector2D): Boolean

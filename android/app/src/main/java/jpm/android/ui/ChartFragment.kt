@@ -13,6 +13,7 @@ import jpm.android.App
 import jpm.android.R
 import jpm.android.messages.*
 import jpm.android.ui.common.BaseFragment
+import jpm.lib.comm.MessageType
 
 class ChartFragment : BaseFragment() {
 
@@ -48,36 +49,36 @@ class ChartFragment : BaseFragment() {
     }
 
     fun registerListeners() {
-        App.getBroker().setListener(ReaderMessageType.MpuSensorsValues.header,this)
-        App.getBroker().setListener(ReaderMessageType.MotorsSpeed.header,this)
-        App.getBroker().setListener(InternalMessageType.ChangeGraphVisibility.header,this)
+        App.getBroker().setListener(MessageType.MpuSensorsValues.header,this)
+        App.getBroker().setListener(MessageType.MotorsSpeed.header,this)
+        App.getBroker().setListener(MessageType.ChangeGraphVisibility.header, this)
     }
 
     fun removeListeners() {
-        App.getBroker().removeListener(ReaderMessageType.MpuSensorsValues.header,this)
-        App.getBroker().removeListener(ReaderMessageType.MotorsSpeed.header,this)
-        App.getBroker().removeListener(InternalMessageType.ChangeGraphVisibility.header,this)
+        App.getBroker().removeListener(MessageType.MpuSensorsValues.header,this)
+        App.getBroker().removeListener(MessageType.MotorsSpeed.header,this)
+        App.getBroker().removeListener(MessageType.ChangeGraphVisibility.header,this)
     }
 
-    override fun onMessage(message: jpm.android.com.Message) {
+    override fun onMessage(message: jpm.lib.comm.Message) {
         if(message is MpuSensorsValuesReader.MpuSensorsValuesMessage) {
-            data!!.addDataPoint(0,message.timeStamp,message.accelerometer[0])
-            data!!.addDataPoint(1,message.timeStamp,message.accelerometer[1])
-            data!!.addDataPoint(2,message.timeStamp,message.accelerometer[2])
+            data!!.addDataPoint(0,message.time,message.accelerometer[0])
+            data!!.addDataPoint(1,message.time,message.accelerometer[1])
+            data!!.addDataPoint(2,message.time,message.accelerometer[2])
 
-            data!!.addDataPoint(3,message.timeStamp,message.gyroscope[0])
-            data!!.addDataPoint(4,message.timeStamp,message.gyroscope[1])
-            data!!.addDataPoint(5,message.timeStamp,message.gyroscope[2])
+            data!!.addDataPoint(3,message.time,message.gyroscope[0])
+            data!!.addDataPoint(4,message.time,message.gyroscope[1])
+            data!!.addDataPoint(5,message.time,message.gyroscope[2])
 
-            data!!.addDataPoint(6,message.timeStamp,message.compass[0])
-            data!!.addDataPoint(7,message.timeStamp,message.compass[1])
-            data!!.addDataPoint(8,message.timeStamp,message.compass[2])
+            data!!.addDataPoint(6,message.time,message.compass[0])
+            data!!.addDataPoint(7,message.time,message.compass[1])
+            data!!.addDataPoint(8,message.time,message.compass[2])
             data!!.redraw()
         } else if(message is MotorsSpeedMessageReader.MotorsSpeedMessage) {
-            data!!.addDataPoint(9,message.timeStamp,message.frontLeftSpeed)
-            data!!.addDataPoint(10,message.timeStamp,message.frontRightSpeed)
-            data!!.addDataPoint(11,message.timeStamp,message.backLeftSpeed)
-            data!!.addDataPoint(12,message.timeStamp,message.backRightSpeed)
+            data!!.addDataPoint(9,message.time,message.frontLeftSpeed)
+            data!!.addDataPoint(10,message.time,message.frontRightSpeed)
+            data!!.addDataPoint(11,message.time,message.backLeftSpeed)
+            data!!.addDataPoint(12,message.time,message.backRightSpeed)
             data!!.redraw()
         } else if(message is ChangeGraphVisibility) {
             data!!.show(message.itemId, message.checked)

@@ -53,7 +53,6 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
     val endPointMin = DoubleVector2D(deltaX + rndX - 50.0,deltaY + 2.0)
     val endPointMax = DoubleVector2D(deltaX + rndX - 2.0,deltaY + rndY - 2.0)
 
-    //override val dimMin = 4.0
     override val dimMin = 2.0
 
     override val initialDim = Math.round(Math.pow(2.0, 10.0).toFloat())
@@ -62,7 +61,7 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
     val occupiedThreshold = 0.7
 
     val minOccup = 0.0
-    val maxOccup =0.50000001
+    val maxOccup = 0.50000001
 
     val robotCircleRadius = 0.07                                        // BW / 2
     val bodyWidth = 2 * robotCircleRadius                               // BW

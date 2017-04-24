@@ -84,7 +84,7 @@ fun <T: Vector2D<T,N>, N: Number> lineIntersection(a1: T, a2: T, b1: T, b2: T): 
     */
     val r = a2 - a1
     val s = b2 - b1
-    val rxs = (r crossProduct s)
+    val rxs = r crossProduct s
     val rxsDouble = rxs.toDouble()
 
     val b1_minus_a1 = b1 - a1
@@ -306,14 +306,13 @@ fun <T: Vector2D<T,N>, N: Number> toGlobalCoordinates(l: T, angle: Double): T = 
  *        (angle positive in anticlockwise - like trigonometric circle)
  * @return coordinate in local frame
  */
-fun <T: Vector2D<T,N>, N: Number>toLocalCoordinates(g: T, angle: Double): T  = g rotate angle
+fun <T: Vector2D<T,N>, N: Number> toLocalCoordinates(g: T, angle: Double): T  = g rotate angle
 
-fun rotation(startAngle: Double, endAngle: Double): Double = endAngle - startAngle
+fun rotation(startAngle: Double, endAngle: Double) = endAngle - startAngle
 
-fun nearZero(value: Double, epsilon: Double): Boolean
-        = -epsilon <= value && value <= epsilon
+fun nearZero(value: Double, epsilon: Double) = -epsilon <= value && value <= epsilon
 
-fun nearEqualsRel(valueA: Double, valueB: Double, epsilon: Double): Boolean
+fun nearEqualsRel(valueA: Double, valueB: Double, epsilon: Double)
         = Math.abs(valueA - valueB) <= epsilon * Math.max(Math.abs(valueA), Math.abs(valueB))
 
 /**

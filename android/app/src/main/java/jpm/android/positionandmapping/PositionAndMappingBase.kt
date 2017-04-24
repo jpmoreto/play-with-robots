@@ -1,13 +1,14 @@
 package jpm.android.positionandmapping
 
 import jpm.android.App
-import jpm.android.com.Message
-import jpm.android.com.MessageListener
 import jpm.lib.math.*
 import jpm.android.messages.*
 import jpm.android.positionandmapping.ahrs.FusionAhrs
 import jpm.android.robot.Pose
 import jpm.android.robot.RobotDimensions.distanceWheel
+import jpm.lib.comm.Message
+import jpm.lib.comm.MessageListener
+import jpm.lib.comm.MessageType
 
 /**
  * Created by jm on 20/02/17.
@@ -272,8 +273,8 @@ class PositionAndMappingBase : MessageListener {
     var compassCalibrationDone = false
 
     init {
-        App.getBroker().setListener(ReaderMessageType.MpuAndSpeedSensorsValues.header, this)
-        App.getBroker().setListener(ReaderMessageType.CompassCalibrationValues.header, this)
+        App.getBroker().setListener(MessageType.MpuAndSpeedSensorsValues.header, this)
+        App.getBroker().setListener(MessageType.CompassCalibrationValues.header, this)
     }
 
     var lastPose = Pose(0,0.0,0.0,0.0)
@@ -295,7 +296,7 @@ class PositionAndMappingBase : MessageListener {
                         gyroscope,
                         accelerometer,
                         compass,
-                        (message.timeStamp - previousTime) / 1000.0f)
+                        (message.time - previousTime) / 1000.0f)
 
                 if (!fusionAhrs.isInitialising()) {
 
@@ -306,7 +307,7 @@ class PositionAndMappingBase : MessageListener {
                     //val pitch = fusionAhrs.getPitch()
                     val yaw = fusionAhrs.getYaw() // angle? rotation? in x y plane
 
-                    val vteta = (yaw - lastPose.angle) / (message.timeStamp - lastPose.time) // ??
+                    val vteta = (yaw - lastPose.angle) / (message.time - lastPose.time) // ??
 
                     //val earthDir = FusionCompass.calculateHeading(accelerometer, compass)
 
@@ -316,12 +317,13 @@ class PositionAndMappingBase : MessageListener {
                     val velocity = getLinearVelocity(leftVelocity, rightVelocity, vteta, yaw /* earthDir ? */,n)
 
                     App.getBroker().send(NewPoseMessage(
+                            System.currentTimeMillis(),
                             yaw /* earthDir ? */,
-                            velocity.x * (message.timeStamp - lastPose.time),
-                            velocity.y * (message.timeStamp - lastPose.time)))
+                            velocity.x * (message.time - lastPose.time),
+                            velocity.y * (message.time - lastPose.time)))
                 }
             }
-            previousTime = message.timeStamp
+            previousTime = message.time
         }
     }
 
