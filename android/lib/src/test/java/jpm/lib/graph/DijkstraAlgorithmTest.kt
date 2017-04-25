@@ -2,9 +2,9 @@ package jpm.lib.graph
 
 import jpm.lib.graph.algorithms.AStarAlgorithm
 import jpm.lib.graph.algorithms.DijkstraAlgorithm
-import jpm.lib.graph.graphs.WeightedGraph
-import jpm.lib.graph.graphs.WeightedGraph.Node
-import jpm.lib.graph.graphs.WeightedGraph.Arc
+import jpm.lib.graph.WeightedGraph
+import jpm.lib.graph.WeightedGraph.Node
+import jpm.lib.graph.WeightedGraph.Arc
 import jpm.lib.math.DoubleVector2D
 import org.junit.Test
 
@@ -53,12 +53,12 @@ class DijkstraAlgorithmTest {
                 .add(Arc(node7,node8,7.0))
 
 
-        val alg = DijkstraAlgorithm<WeightedGraph.Graph,WeightedGraph.Node,WeightedGraph.Arc>()
+        val alg = DijkstraAlgorithm<WeightedGraph.Graph, WeightedGraph.Node, WeightedGraph.Arc>()
         alg.apply(graph,node0)
 
         println("DijkstraAlgorithm\n$graph")
 
-        val alg1 = AStarAlgorithm<WeightedGraph.Graph,WeightedGraph.Node,WeightedGraph.Arc>()
+        val alg1 = AStarAlgorithm<WeightedGraph.Graph, WeightedGraph.Node, WeightedGraph.Arc>()
         alg1.apply(graph,node0, node6)
 
         println("AStarAlgorithm\n$graph")

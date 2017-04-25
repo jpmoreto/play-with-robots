@@ -1,5 +1,6 @@
-package jpm.lib.graph.graphs
+package jpm.lib.graph
 
+import jpm.lib.graph.graphs.WeightedGraphAbs
 import jpm.lib.math.DoubleVector2D
 
 /**
@@ -58,7 +59,7 @@ object WeightedGraph {
         }
     }
 
-    class Arc(startNode: Node, endNode: Node, weight: Double) : WeightedGraphAbs.Arc<Node,Arc>(startNode,endNode,weight) {
+    class Arc(startNode: Node, endNode: Node, weight: Double) : WeightedGraphAbs.Arc<Node, Arc>(startNode, endNode, weight) {
         override fun weight() = weight
 
         init {
@@ -70,8 +71,8 @@ object WeightedGraph {
         }
     }
 
-    class Graph: WeightedGraphAbs.Graph<Graph,Node,Arc> {
-        val nodes = mutableMapOf<String,Node>()
+    class Graph: WeightedGraphAbs.Graph<Graph, Node, Arc> {
+        val nodes = mutableMapOf<String, Node>()
 
         operator fun get(nodeName: String): Node? = nodes[nodeName]
 
