@@ -21,10 +21,7 @@ import java.util.concurrent.PriorityBlockingQueue
 class Bluetooth(val broker: Broker,bufferRecCapacity: Int): MessageListener {
 
     override fun onMessage(message: Message) {
-        val writer = writers[message.header]
-        if(writer != null) {
-            sendQueue.offer(message)
-        }
+        sendQueue.offer(message)
     }
 
     private val sendQueue = PriorityBlockingQueue<Message>(bufferRecCapacity)
@@ -78,7 +75,7 @@ class Bluetooth(val broker: Broker,bufferRecCapacity: Int): MessageListener {
                     val writer = writers[m.header]
                     if(writer != null) {
                         outStream.writeByte(m.header.toInt())
-                        writers[m.header]?.write(m, outStream)
+                        writer.write(m, outStream)
                     }
                 }
             } catch (e: IOException) {

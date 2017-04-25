@@ -15,9 +15,9 @@ val vY = 1
 val vZ = 2
 
 val qW = 0
-val qX = 0
-val qY = 1
-val qZ = 2
+val qX = 1
+val qY = 2
+val qZ = 3
 
 fun degreesToRadians(degrees: Float): Float = degrees * Math.PI.toFloat() / 180.0f
 fun radiansToDegrees(degrees: Float): Float = degrees * 180.0f / Math.PI.toFloat()

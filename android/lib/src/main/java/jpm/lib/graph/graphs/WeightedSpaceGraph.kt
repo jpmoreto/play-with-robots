@@ -63,12 +63,11 @@ object WeightedSpaceGraph {
     }
 
     class Arc(startNode: Node, endNode: Node, weight: Double) : WeightedGraphAbs.Arc<Node,Arc>(startNode,endNode,weight) {
-        override fun weight() = weight
-
         init {
             startNode.add(this)
-            //endNode.add(this)
         }
+
+        override fun weight() = weight
 
         override fun equals(other: Any?): Boolean {
             if(other is Arc) {
@@ -77,13 +76,11 @@ object WeightedSpaceGraph {
             return false
         }
 
-        override fun hashCode(): Int {
-            return startNode.hashCode().xor(endNode.hashCode())
-        }
+        override fun hashCode(): Int
+            = startNode.hashCode().xor(endNode.hashCode())
 
-        override fun toString(): String {
-            return "Arc(startNode=$startNode, endNode=$endNode, weight=$weight)"
-        }
+        override fun toString(): String
+            = "Arc(startNode=$startNode, endNode=$endNode, weight=$weight)"
     }
     /*
     object ArcComparator: Comparator<Arc> {

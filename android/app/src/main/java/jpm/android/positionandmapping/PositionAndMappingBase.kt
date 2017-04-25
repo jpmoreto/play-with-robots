@@ -46,7 +46,7 @@ import jpm.messages.NewPoseMessage
          - vteta - dado pelo gyroscópio + bussola
          - teta - dado pelo gyroscópio + bussola e o tempo de rotação
          - t
-         - n - constante definida experimentalmente, mas deve ser >= 0 e possivelmente <= 1
+         - n - constante definida experimentalmente, mas deve ser >= 0 e <= 1
 
         outputs:
          - vx
