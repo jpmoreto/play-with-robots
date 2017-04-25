@@ -5,7 +5,7 @@ package jpm.lib.graph.abs
  *
  */
 
-interface   Arc<N: Node> {
+interface   Arc<out N: Node> {
     val startNode: N
     val endNode: N
 }

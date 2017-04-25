@@ -5,6 +5,6 @@ package jpm.lib.graph.abs
  *
  */
 
-interface WeightedArc<NO: Node, N: Number>: Arc<NO> {
+interface WeightedArc<out NO: Node, out N: Number>: Arc<NO> {
     fun weight(): N
 }

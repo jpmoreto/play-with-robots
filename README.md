@@ -11,8 +11,9 @@ E algumas fotografias do robot (à uns meses atrás):
 Este projecto está em obras e ainda falta muito trabalho: quer de software; quer com o ferro de soldar. Mas já existe algum código na pasta andoroid/lib que já está pronto a utilizar. 
 
 O projecto está dividido nas seguintes pastas:
-* **android/app** : Código que só corre em ambiente android, tipicamente o UI e as comunicações bluetooth. O package jpm/lib é um link para o mesmo código existente na biblioteca lib, e esse link foi criado em vez de ter uma dependencia para a biblioteca, para o progard poder remover o código não utilizado de forma eficiente (lib depende de outras bibliotecas externas).
+* **android/app** : Código que só corre em ambiente android, tipicamente o UI e as comunicações bluetooth. O package jpm/lib é um link para o mesmo código existente na biblioteca lib e jpm messages para o código existente na biblioteca messages, esses link foram criados em vez de ter uma dependencia para as bibliotecas, para o progard poder remover o código não utilizado de forma eficiente (lib depende de outras bibliotecas externas), e para poder testar esse código fora do ambiente android.
 * **android/lib** : Código independente da plataforma android, onde estão os algoritmos de caminho mais curto, a representação do mapa do espaço ocupado, ... O restante projecto é completamente especifico para o robot que estou a construir. O código existente em lib pode ser usado noutros contextos.
+* **android/messages** : Definição das mensagens usadas quer internamente quer para comunicar com o Arduino. Especifico para o robot que estou a construir. 
 * **android/testsApp** : Código usado só para testar os algoritmos em lib fora da plataforma android (é mais simples). Usa o javafx para visualizar os outputs dos algoritmos e ajudar a perceber se a coisa está a funcionar conforme o pretendido.
 * **arduino** : Código que corre no Arduino.
 

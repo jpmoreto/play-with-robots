@@ -34,7 +34,6 @@ interface GenericSearchAlgorithm<G : Graph<G, N, A>, N : Node, A : Arc<N>>:
                     }
                 }
             }
-
             nextNode = removeNext()
         }
     }
