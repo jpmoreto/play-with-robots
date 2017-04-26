@@ -76,3 +76,4 @@ O projecto está dividido em duas partes, uma parte com o código que corre no A
 * Para o Android uso o [Android Studio](https://developer.android.com/studio/index.html), e basta fazer File -> New -> Import project... e selecionar o ficheiro android/build.gradle
 * Para o Arduino uso o [Atom](https://atom.io/) com o plugin [platformio](http://platformio.org/), e basta fazer PlatformIO -> Open Project folder... e selecionar a pasta arduino 
 
+Os testes definidos em android/testsApp não são verdadeiramente testes automáticos, mas sim uma maneira de visualmente conseguir ver os resultados dos algoritmos a partir do IDE. Corro sempre estes testes a partir do IDE selecionando a classe que pretendo com o botão direito do rato e selecionando a opção Run <nome da classe> que aparece no popup menu.
