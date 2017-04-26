@@ -3,6 +3,7 @@ Support software to build my robot toy using android (kotlin) and arduino (c++)
 
 For the no portuguese speakers sory, but to be fluent in my writing all the other things will be writed in portuguese (except the code itself)
 
+## Breve descrição
 O objectivo do projecto está descrito [aqui](https://github.com/jpmoreto/play-with-robots/blob/master/docs/descri%C3%A7%C3%A3o_robot.pdf)
 E algumas fotografias do robot (à uns meses atrás):
 * [fotografia 1](https://github.com/jpmoreto/play-with-robots/blob/master/docs/20170208_013006.jpg)
@@ -55,3 +56,23 @@ Pode haver métodos baseado em heurísticas mais simples de navegação suportad
 
 A classe **KDTreeD** implementa tambem um algoritmo que dado um segmento de recta e a representação de um espaço ocupado calcula o ponto de intersecção desse segmento de recta com o espaço ocupado mais proximo de um dos pontos do segmento. 
 A classe **KDTreeDRayTracing** existente debaixo da pasta **android/testsApp** tem um exemplo completo de como isso é feito e depois mostra visualmente usando javafx quer a representação do espaço ocupado, todos os pontos de intersecção do segmento de recta com esse espaço, e o ponto de intersecção mais proximo de um dos pontos do segmento de recta.
+
+## Instalação
+
+Para instalar este projecto deve:
+
+1. criar uma cópia local deste repositório: 
+git clone https://github.com/jpmoreto/play-with-robots.git
+
+1. caso ainda não tenha o jfxrt.tar instalar o jfxrt.jar localmente:
+   No meu caso ele já vem com a distribuição do jdk e está em /usr/java/jdk1.8.0_111/jre/lib/ext/jfxrt.jar
+   
+1. editar o ficheiro [android/testsApp/build.gradle](gradle/testsApp/build.gradle) e substituir /usr/java/jdk1.8.0_111/jre/lib/ext/jfxrt.jar pelo path completo do jfxrt.jar
+
+## Configurar projecto no IDE
+
+O projecto está dividido em duas partes, uma parte com o código que corre no Arduino e outra com o código que corre no Android.
+
+* Para o Android uso o [Android Studio](https://developer.android.com/studio/index.html), e basta fazer File -> New -> Import project... e selecionar o ficheiro android/build.gradle
+* Para o Arduino uso o [Atom](https://atom.io/) com o plugin [platformio](http://platformio.org/), e basta fazer PlatformIO -> Open Project folder... e selecionar a pasta arduino 
+
