@@ -67,7 +67,7 @@ git clone https://github.com/jpmoreto/play-with-robots.git
 1. caso ainda não tenha o jfxrt.tar instalar o jfxrt.jar localmente:
    No meu caso ele já vem com a distribuição do jdk e está em /usr/java/jdk1.8.0_111/jre/lib/ext/jfxrt.jar
    
-1. editar o ficheiro [android/testsApp/build.gradle](gradle/testsApp/build.gradle) e substituir /usr/java/jdk1.8.0_111/jre/lib/ext/jfxrt.jar pelo path completo do jfxrt.jar
+1. editar o ficheiro [android/testsApp/build.gradle](android/testsApp/build.gradle) e substituir /usr/java/jdk1.8.0_111/jre/lib/ext/jfxrt.jar pelo path completo do jfxrt.jar
 
 ## Configurar projecto no IDE
 
