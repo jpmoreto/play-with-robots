@@ -80,10 +80,6 @@ object WeightedGraph {
             return nodes.map { it.value }.toSet()
         }
 
-        override fun arcs(): Set<Arc> {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
         override fun startNodes(): Set<Node> {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
@@ -111,29 +107,9 @@ object WeightedGraph {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
-        override fun deg(node: Node): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun outDeg(node: Node): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun inDeg(node: Node): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
         override fun outArcs(node: Node): Set<Arc> = node.arcs
 
         override fun inArcs(node: Node): Set<Arc> = node.arcs
-
-        override fun arcs(node: Node): Set<Arc> {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun adjacent(a: Node, b: Node): Boolean {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
 
         override fun toString(): String {
             return "Graph(nodes=${nodes().sortedBy { it.name }})"

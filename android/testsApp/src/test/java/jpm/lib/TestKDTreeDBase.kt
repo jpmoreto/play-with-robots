@@ -35,7 +35,7 @@ interface TestKDTreeDBase {
     fun startDraw(primaryStage: Stage) {
         primaryStage.title = "Drawing Operations Test"
         val root = Group()
-        val canvas = Canvas(1000.0, 1000.0)
+        val canvas = Canvas(1350.0, 702.0)
         val gc = canvas.graphicsContext2D
         root.children.add(canvas)
         primaryStage.scene = Scene(root)

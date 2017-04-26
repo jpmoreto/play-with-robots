@@ -17,12 +17,11 @@ abstract class AlgorithmAbs<
     override val queue = TreeSet<N>(WeightedGraphAbs.CompareNodesByCost())
 
     override fun add(node: N) {
-        //println("add($node)")
         queue.add(node)
     }
 
     override fun remove(node: N) {
-       queue.remove(node)
+        queue.remove(node)
     }
 
     override fun removeNext(): N? {

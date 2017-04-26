@@ -14,8 +14,7 @@ object WeightedSpaceGraph {
     class Node(val p1: DoubleVector2D, val p2: DoubleVector2D, val middlePoint: DoubleVector2D): WeightedGraphAbs.Node<Node,Arc> {
 
         override fun setVisited(isVisited: Boolean) {
-            //println("setVisited $this ${getMinCostToEndNode() + minCost_}")
-            visited_ = isVisited
+             visited_ = isVisited
         }
 
         override fun getVisited(): Boolean = visited_
@@ -118,10 +117,6 @@ object WeightedSpaceGraph {
             return nodes.map { it.value }.toSet()
         }
 
-        override fun arcs(): Set<Arc> {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
         override fun startNodes(): Set<Node> {
             return if(startNode != null) setOf(startNode!!) else setOf<Node>()
         }
@@ -151,29 +146,9 @@ object WeightedSpaceGraph {
             return this
         }
 
-        override fun deg(node: Node): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun outDeg(node: Node): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun inDeg(node: Node): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
         override fun outArcs(node: Node): Set<Arc> = node.arcs
 
         override fun inArcs(node: Node): Set<Arc> = node.arcs
-
-        override fun arcs(node: Node): Set<Arc> {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun adjacent(a: Node, b: Node): Boolean {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
 
         override fun toString(): String {
             return "Graph(nodes=${nodes().sortedBy { it.middlePoint }})"

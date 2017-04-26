@@ -28,7 +28,7 @@ Descrição das principais classes/funções definidas em android/src/lib:
   * ocupação <= 0.5 - epsilon => espaço está livre com probabilidade correspondente a 1 - ocupação.
   * 0.5 - epsilon < ocupação < 0.5 + epsilon => desconheço o estado do espaço (não sei se está ocupado ou não)
   
-  Esta classe permite verificar os pontos ocupados (ou livres) que interceptam um segmento de recta utilizando o método intersectRay.
+  Esta classe permite verificar os pontos ocupados (ou livres) que intercectam um segmento de recta utilizando o método intersectRay.
   Permite tambem visitar todos os nós e por exemplo construir uma lista de rectangulos com os espaços livres.
   
 * jpm.lib.math.**compactRectangles**: Esta função leva como argumento uma lista de rectangulos, e devolve como resultado uma lista de rectangulos em que agregou rectangulos adjacentes num único rectangulo. Se os rectangulos representarem por exemplo espaço livre (ou ocupado) a lista devolvida representa exatamente o mesmo espaço mas usando o menor numero de rectangulos que consiga.  

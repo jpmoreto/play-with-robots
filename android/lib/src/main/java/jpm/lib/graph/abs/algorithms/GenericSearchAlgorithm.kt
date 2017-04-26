@@ -29,9 +29,7 @@ interface GenericSearchAlgorithm<G : Graph<G, N, A>, N : Node, A : Arc<N>>:
                 if (!wasVisited(node)) {
                     remove(node)
 
-                    if(visit(arc, node)) {
-                        add(node)
-                    }
+                    if(visit(arc, node)) add(node)
                 }
             }
             nextNode = removeNext()
