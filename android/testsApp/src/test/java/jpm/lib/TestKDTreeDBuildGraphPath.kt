@@ -35,14 +35,14 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
     //override val iterations = 2500
     //override val iterations = 2090
     //override val iterations = 2700
-    override val iterations = 1500
+    override val iterations = 3000
     //override val iterations = 2
 
     override val deltaX = 10
     override val deltaY = 10
 
-    override val rndX = 950
-    override val rndY = 650
+    override val rndX = 1330
+    override val rndY = 680
 
     val startPoint = DoubleVector2D(120.0,140.0)
     val endPoint = DoubleVector2D(780.0,480.0)
@@ -55,8 +55,8 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
 
     override val dimMin = 2.0
 
-    override val initialDim = Math.round(Math.pow(2.0, 10.0).toFloat())
-    override val centerPointD = DoubleVector2D(500.0, 500.0)
+    override val initialDim = Math.round(Math.pow(2.0, 11.0).toFloat())
+    override val centerPointD = DoubleVector2D(675.0, 350.0)
 
     val occupiedThreshold = 0.7
 
@@ -80,7 +80,7 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
     }
 
     override fun drawShapesKDTreeD(gc: GraphicsContext) {
-       for(i in 1..39)  {
+       for(i in 1..1)  {
            gc.clearRect(0.0, 0.0, gc.canvas.width, gc.canvas.height)
            drawShapesKDTreeD1(gc)
        }
@@ -106,8 +106,6 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
         val t1_0 = System.currentTimeMillis()
 
         setOccupiedDBound(treeWithRobotWith)
-
-        val t1_1 = System.currentTimeMillis()
 
         //val nodes = treeWithRobotWith.getNodes(minOccup,maxOccup,deltaX.toDouble(),deltaY.toDouble(),deltaX.toDouble() + rndX,deltaY.toDouble() + rndY)
 
@@ -229,7 +227,6 @@ class KDTreeDBuildGraphPath : TestKDTreeDBase, Application() {
         println("path size = ${pathOptimized.size}; original path size = ${path.size}")
 
         println("time to build tree with robot            = ${t1_0-t0} ms")
-        println("time to build initial free rectangle set = ${t2-t1_1} ms")
         println("time to from node to rectangles          = ${t3-t2} ms")
         println("time to compact rectangle set            = ${t4-t3} ms")
         println("time to build graph                      = ${t6-t5} ms")

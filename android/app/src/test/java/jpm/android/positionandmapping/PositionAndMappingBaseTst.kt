@@ -37,7 +37,7 @@ class PositionAndMappingBaseTst {
          */
     }
 
-    fun cubicPolynomialTest(angle:Double) {
+    private fun cubicPolynomialTest(angle:Double) {
         val x2_ = 1.0
         val y2_ = 30.0
 
@@ -66,7 +66,7 @@ class PositionAndMappingBaseTst {
         }
     }
 
-    fun cubicPolynomialToTest(angle:Double) {
+    private fun cubicPolynomialToTest(angle:Double) {
         val x2_ = 1.0
         val y2_ = 30.0
 
@@ -136,7 +136,7 @@ class PositionAndMappingBaseTst {
         println("")
     }
 
-    fun test1(vl: Double,vr:Double, n: Double) {
+    private fun test1(vl: Double,vr:Double, n: Double) {
         // a diferença entre o angulo teórico e o real tendo em conta o atrito aumenta quanto maior for o angulo
         val vteta = if(vr != 0.0 || vl != 0.0)
             ((vr - vl) / RobotDimensions.distanceWheel) * ( 6.0 + 4 * Math.abs(Math.min(vr,vl)/Math.max(vr,vl))) / 10.0
@@ -148,7 +148,7 @@ class PositionAndMappingBaseTst {
         println("(vteta=$vteta,\tn=$n)\tv_a=$v_a;\tv_b=$v_b;\tv_a/v_b=${v_a.y/v_b.y}")
     }
 
-    //@Test
+    @Test
     fun changeCoordinates() {
 
         test(Math.PI / 2.0,0.5)
@@ -167,7 +167,7 @@ class PositionAndMappingBaseTst {
         test(Math.PI / 16.0,0.1)
     }
 
-    fun test(vteta: Double, n: Double) {
+    private fun test(vteta: Double, n: Double) {
         val v_a = getLinearVelocity(0.1, 0.15, vteta, 0.0 ,n)
         val v_b = getLinearVelocity(0.1, 0.15, 0.0, 0.0 ,n)
 

@@ -103,7 +103,7 @@ class DoubleVector2D(x:Double, y:Double): Vector2D<DoubleVector2D,Double>(x,y) {
             = sqrt(x * x + y * y)
 
     override fun normalize(): DoubleVector2D
-            = this * 1.0
+            = this / length()
 
     override fun angle(b: DoubleVector2D): Double
             = acos(product(b) /(this.length() * b.length()))

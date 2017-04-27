@@ -12,12 +12,12 @@ import jpm.lib.math.DoubleVector2D
 
 object SpaceBuilder {
 
-    val dim = Math.pow(2.0, 11.0)
-    val minDim = 2.0
-    val centerPointD = DoubleVector2D(675.0, 350.0)
+    private val dim = Math.pow(2.0, 11.0)
+    private val minDim = 2.0
+    private val centerPointD = DoubleVector2D(675.0, 350.0)
 
-    val bottomLeft = DoubleVector2D(2.0,2.0)
-    val topRight = DoubleVector2D(1348.0,700.0)
+    private val bottomLeft = DoubleVector2D(2.0,2.0)
+    private val topRight = DoubleVector2D(1348.0,700.0)
 
     fun build(): KDTreeD.Node {
         KDTreeD.dimMin = minDim
@@ -70,7 +70,7 @@ object SpaceBuilder {
         return tree
     }
 
-    fun rectangle(tree: KDTreeD.Node, bottomLeft: DoubleVector2D, topRight: DoubleVector2D) {
+    private fun rectangle(tree: KDTreeD.Node, bottomLeft: DoubleVector2D, topRight: DoubleVector2D) {
         println("rectangle($bottomLeft,$topRight)")
         val halfDimMin = KDTreeD.dimMin / 2.0
 
@@ -94,7 +94,7 @@ object SpaceBuilder {
         }
     }
 
-    fun line(tree: KDTreeD.Node, p1: DoubleVector2D, p2: DoubleVector2D) {
+    private fun line(tree: KDTreeD.Node, p1: DoubleVector2D, p2: DoubleVector2D) {
         println("line($p1,$p2)")
         val halfDimMin = KDTreeD.dimMin / 2.0
 
@@ -127,14 +127,14 @@ object SpaceBuilder {
         }
     }
 
-    fun vTable(tree: KDTreeD.Node, pos: DoubleVector2D) {
+    private fun vTable(tree: KDTreeD.Node, pos: DoubleVector2D) {
 
         line(tree, DoubleVector2D(0.0, 0.0) + pos, DoubleVector2D(50.0, 0.0) + pos)
         line(tree, DoubleVector2D(0.0, 100.0) + pos, DoubleVector2D(50.0, 100.0) + pos)
         line(tree, DoubleVector2D(25.0, 0.0)+ pos, DoubleVector2D(25.0, 100.0) + pos)
     }
 
-    fun hTable(tree: KDTreeD.Node, pos: DoubleVector2D) {
+    private fun hTable(tree: KDTreeD.Node, pos: DoubleVector2D) {
 
         line(tree, DoubleVector2D(0.0, 0.0) + pos, DoubleVector2D(0.0, 50.0) + pos)
         line(tree, DoubleVector2D(100.0, 0.0) + pos, DoubleVector2D(100.0, 50.0) + pos)

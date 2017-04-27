@@ -5,29 +5,6 @@ import java.util.*
 /**
  * Created by jm on 19/02/17.
  *
- * http://geomalgorithms.com/a12-_hull-3.html
- * http://www.algomation.com/algorithm/graham-scan-convex-hull
- *
- * http://www.sosmath.com/trig/Trig5/trig5/trig5.html
- * https://en.wikipedia.org/wiki/List_of_trigonometric_identities
- *
- * http://algs4.cs.princeton.edu/99hull/GrahamScan.java.html
- * http://algs4.cs.princeton.edu/99hull/Point2D.java.html
- *
- * http://stackoverflow.com/questions/1585459/whats-the-most-efficient-way-to-detect-triangle-triangle-intersections
- * http://blackpawn.com/texts/pointinpoly/default.html
- *
- * http://realtimecollisiondetection.net/
- * https://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm
- * http://www.java-gaming.org/index.php?topic=30375.0
- * http://seb.ly/2009/05/super-fast-trianglerectangle-intersection-test/
- * https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
- *
- * https://github.com/libgdx/libgdx *************************************
- * https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/math/Intersector.java
- *
- * sin(-teta) = -sin(teta)
- * cos(-teta) =  cos(teta)
  */
 
 data class LineSegment<T: Vector<T,N>,N:Number>(val p1: T, val p2: T)
@@ -43,13 +20,6 @@ fun <R: Rectangle<T,N>, T: Vector2D<T,N>, N:Number> intersect(r1: R, r2: R): Boo
     r1.p1 le_x r2.p2 && r1.p2 ge_x r2.p1 && r2.p2 le_y r2.p2 && r1.p2 ge_y r2.p1
 
 fun <T: Vector2D<T,N>, N:Number> intersection(r1: Rectangle<T,N>, r2: Rectangle<T,N>): Rectangle<T,N>? {
-    /*
-      r1.p1.x < r2.p1.x && r1.p1.y < r2.p1.y
-      r1.p1.x < r2.p1.x && r1.p1.y >= r2.p1.y
-
-      r1.p1.x >= r2.p1.x && r1.p1.y < r2.p1.y
-      r1.p1.x >= r2.p1.x && r1.p1.y >= r2.p1.y
-    */
     if (r1.p1 lt_x r2.p1) {
         if (r1.p1 lt_y r2.p1) {
             val p1 = r2.p1

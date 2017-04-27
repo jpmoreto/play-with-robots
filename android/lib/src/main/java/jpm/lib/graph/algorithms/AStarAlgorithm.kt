@@ -31,7 +31,7 @@ class AStarAlgorithm<
 
                     node.setMinCost(newCost)
                     node.setMinCostArc(arc)
-                } else if(node.getMinCost() + node.getMinCostToEndNode() >= endNode.getMinCost()) return false
+                }
             }
             return true
         }

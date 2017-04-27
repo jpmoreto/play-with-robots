@@ -3,7 +3,8 @@ apply plugin: 'kotlin'
 
 dependencies {
     testCompile 'junit:junit:4.12'
-    compile files("/usr/java/jdk1.8.0_111/jre/lib/ext/jfxrt.jar")
+    compile files("/usr/java/jdk1.8.0_131/jre/lib/ext/jfxrt.jar")
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile project(':lib')
+    compile project(':messages')
 }

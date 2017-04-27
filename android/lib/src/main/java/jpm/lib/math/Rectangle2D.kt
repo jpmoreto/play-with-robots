@@ -409,11 +409,11 @@ fun compactRectangles(rectContexts: Collection<RectangleContext>, minDiff: Int =
                                                rectangleContextsToAdd: MutableList<RectangleContext>,
                                                rectangleContextsToDelete: MutableList<RectangleContext>) -> Unit) {
 
-        val iterLow = rectContextsByLow.iterator()
-        val iterHigh = rectContextsByHigh.iterator()
+        val iterLow = rectContextsByLow.double2ReferenceEntrySet().iterator()
+        val iterHigh = rectContextsByHigh.double2ReferenceEntrySet().iterator()
 
-        var low: MutableMap.MutableEntry<Double,ObjectAVLTreeSet<RectangleContext>>
-        var high: MutableMap.MutableEntry<Double,ObjectAVLTreeSet<RectangleContext>>
+        var low: Map.Entry<Double,ObjectAVLTreeSet<RectangleContext>>
+        var high: Map.Entry<Double,ObjectAVLTreeSet<RectangleContext>>
         val rectangleContextsToAdd = mutableListOf<RectangleContext>()
         val rectangleContextsToDelete = mutableListOf<RectangleContext>()
 

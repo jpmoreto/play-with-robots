@@ -105,51 +105,48 @@ object GraphBuilder {
             }
         }
 
-        return if(path.size > 1) path.asReversed() else mutableListOf<WeightedSpaceGraph.Node>()
+        return path.asReversed()
     }
 
     fun optimizePath(originalPath: List<WeightedSpaceGraph.Node>, tree: KDTreeD.Node, occupiedThreshold: Double): List<WeightedSpaceGraph.Node> {
-
 
         fun havePathFromTo(start: WeightedSpaceGraph.Node, end: WeightedSpaceGraph.Node): Boolean {
             var occupied = false
 
             fun visit(tree: KDTreeD.Node, p: DoubleVector2D, v: DoubleVector2D, t: Double): Boolean {
 
-                if (tree.isLeaf && tree.occupied() > occupiedThreshold) {
-                    occupied = true
-                    return false
-                }
-                return true
+                if (tree.isLeaf && tree.occupied() > occupiedThreshold) occupied = true
+
+                return !occupied
             }
+
             tree.intersectRay(start.middlePoint,end.middlePoint - start.middlePoint, 1.0, ::visit)
             return !occupied
         }
 
-        if(originalPath.isNotEmpty()) {
-            val path = mutableListOf<WeightedSpaceGraph.Node>()
+        if(originalPath.isEmpty()) return originalPath
 
-            var firstNode: WeightedSpaceGraph.Node? = null
-            var lastNode: WeightedSpaceGraph.Node? = null
+        val path = mutableListOf<WeightedSpaceGraph.Node>()
 
-            for (node in originalPath) {
-                if (firstNode === null) {
-                    firstNode = node
-                    path.add(firstNode)
-                } else {
-                    if (lastNode !== null && !havePathFromTo(firstNode, node)) {
-                        path.add(lastNode)
-                        firstNode = lastNode
-                    }
-                    lastNode = node
+        var firstNode: WeightedSpaceGraph.Node? = null
+        var lastNode: WeightedSpaceGraph.Node? = null
+
+        for (node in originalPath) {
+            if (firstNode === null) {
+                firstNode = node
+                path.add(firstNode)
+            } else {
+                if (lastNode !== null && !havePathFromTo(firstNode, node)) {
+                    path.add(lastNode)
+                    firstNode = lastNode
                 }
+                lastNode = node
             }
-            if (firstNode !== originalPath.last()) {
-                path.add(lastNode!!)
-            }
-
-            return path
         }
-        return originalPath
+        if (firstNode !== originalPath.last()) {
+            path.add(lastNode!!)
+        }
+
+        return path
     }
 }

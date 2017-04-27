@@ -229,21 +229,23 @@ class PositionAndMappingBase : MessageListener {
 
                     return DoubleVector2D(vx, vy)
                 }
-                val nvl = if (vl == 0.0) 1E-30 else vl
+                if (!nearZero(vr,1E-30)) {
+                    val nvl = if (vl == 0.0) 1E-30 else vl
 
-                val po = Math.pow(Math.abs(nvl / vr), n)
-                val po_sg = po * sg
-                val vl_po_sg_vr = nvl + po_sg * vr
+                    val po = Math.pow(Math.abs(nvl / vr), n)
+                    val po_sg = po * sg
+                    val vl_po_sg_vr = nvl + po_sg * vr
 
-                val al = if (vl_po_sg_vr == 0.0) 0.0 else (distanceWheel_vteta - vr + nvl) / vl_po_sg_vr
-                val ar = if (vl_po_sg_vr == 0.0) 0.0 else po_sg * (vr - nvl - distanceWheel_vteta) / vl_po_sg_vr
+                    val al = if (vl_po_sg_vr == 0.0) 0.0 else (distanceWheel_vteta - vr + nvl) / vl_po_sg_vr
+                    val ar = if (vl_po_sg_vr == 0.0) 0.0 else po_sg * (vr - nvl - distanceWheel_vteta) / vl_po_sg_vr
 
-                val common = (vr * (1 - ar) + nvl * (1 - al)) / 2
+                    val common = (vr * (1 - ar) + nvl * (1 - al)) / 2
 
-                val vx = common * Math.sin(teta)
-                val vy = common * Math.cos(teta)
+                    val vx = common * Math.sin(teta)
+                    val vy = common * Math.cos(teta)
 
-                return DoubleVector2D(vx, vy)
+                    return DoubleVector2D(vx, vy)
+                }
             }
             val common = (vr + vl) / 2
 
